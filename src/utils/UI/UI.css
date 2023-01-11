@@ -1,4 +1,19 @@
 .color_primary {
-  background-color: #3ddc84;
+  background-color: #2BE080;
+  ;
   color: #000000 !important;
+}
+
+.color_background {
+  background-color: #F5F5F5;
+}
+
+.color_button {
+  background-color: #E8E8E8;
+}
+
+.text {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: calc(18 / 12);
 }
