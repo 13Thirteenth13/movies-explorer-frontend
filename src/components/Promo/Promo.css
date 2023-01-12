@@ -9,6 +9,7 @@
 .promo__title {
   text-align: center;
   padding: 160px 0;
+  max-width: 750px;
 }
 
 .promo__list {

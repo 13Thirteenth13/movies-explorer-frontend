@@ -6,9 +6,9 @@ function Promo() {
       </h1>
       <nav>
         <ul className="promo__list">
-          <li className="promo__list-item color_button text_medium-primary">О проекте</li>
-          <li className="promo__list-item color_button text_medium-primary">Технологии</li>
-          <li className="promo__list-item color_button text_medium-primary">Студент</li>
+          <li className="promo__list-item color_secondary text_medium-primary">О проекте</li>
+          <li className="promo__list-item color_secondary text_medium-primary">Технологии</li>
+          <li className="promo__list-item color_secondary text_medium-primary">Студент</li>
         </ul>
       </nav>
     </section>
