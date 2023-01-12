@@ -1,9 +1,9 @@
 function Techs() {
   return (
     <section className="techs color_background">
-      <h3 className="techs__header text_large-secondary underline-pb25">Технологии</h3>
+      <h2 className="techs__header text_large-secondary underline-pb25">Технологии</h2>
       <div className="techs__info">
-        <h2 className="techs__title text_large-primary">7 технологий</h2>
+        <h3 className="techs__title text_large-primary">7 технологий</h3>
         <p className="techs__text text_medium-secondary">
           На курсе веб&#8209;разработки мы освоили технологии, которые применили в дипломном проекте.
         </p>
