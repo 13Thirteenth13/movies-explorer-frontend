@@ -7,10 +7,10 @@ function Header() {
     <header className="header">
       <img src={logo} alt="Логотип" />
       <nav className="header__links">
-        <Link to="/sign-up" className="header__link">
+        <Link to="/sign-up" className="header__link text_medium-primary">
           Регистрация
         </Link>
-        <Link to="/sign-in" className="header__link color_primary">
+        <Link to="/sign-in" className="header__link color_primary text_medium-primary">
           Войти
         </Link>
       </nav>
