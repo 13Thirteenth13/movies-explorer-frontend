@@ -13,11 +13,3 @@
   src: url(./Inter-Medium.woff2) format("woff2"),
     url(./Inter-Medium.woff) format("woff");
 }
-
-@font-face {
-  font-family: "Suisse-Intl-Regular";
-  font-style: normal;
-  font-weight: 400;
-  src: url(./Suisse-Intl-Regular.woff2) format("woff2"),
-    url(./Suisse-Intl-Regular.woff) format("woff");
-}
