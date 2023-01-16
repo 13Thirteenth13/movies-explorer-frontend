@@ -48,8 +48,7 @@
 .about__links {
   display: flex;
   list-style-type: none;
-  padding: 0;
-  margin: 0;
+  padding: 40px 0 0;
   height: 100%;
   align-items: flex-end;
   gap: 20px;
@@ -90,4 +89,21 @@
   background-color: #000000;
   bottom: 0;
   left: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .about {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .about__info {
+    flex-direction: column-reverse;
+  }
+
+  .about__info-image {
+    align-self: center;
+    width: 100%;
+  }
 }

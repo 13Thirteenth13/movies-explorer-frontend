@@ -44,3 +44,12 @@
 .promo__list-item:hover {
   opacity: 0.6;
 }
+
+@media screen and (max-width: 768px) {
+  .promo {
+    margin: 20px 20px 0 20px;
+  }
+  .promo__title {
+    padding: 320px 20px;
+  }
+}

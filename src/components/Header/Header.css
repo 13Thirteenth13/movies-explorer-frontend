@@ -38,3 +38,9 @@
 .header__link:last-child {
   background-color: #2BE080;
 }
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 18px 30px;
+  }
+}
