@@ -44,3 +44,25 @@
     padding: 18px 30px;
   }
 }
+
+@media screen and (max-width: 640px) {
+  .header__link {
+    font-size: 10px;
+    line-height: calc(16 / 10);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .header {
+    padding: 18px 14px;
+  }
+
+  .header__links {
+    gap: 14px;
+  }
+
+  .header__link {
+    min-width: 54px;
+    padding: 5px 0;
+  }
+}

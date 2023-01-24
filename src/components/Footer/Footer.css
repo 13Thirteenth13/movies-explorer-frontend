@@ -56,7 +56,6 @@
 
 .footer__underline {
   position: relative;
-  padding-bottom: 20px;
 }
 
 .footer__underline::after {
@@ -67,10 +66,44 @@
   background-color: #E8E8E8;
   bottom: 0;
   left: 0;
+  transform: translate(0, 20px);
 }
 
 @media screen and (max-width: 768px) {
   .footer {
     padding: 80px 50px 20px 50px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .footer {
+    padding: 80px 10px 10px 10px;
+  }
+
+  .footer__row {
+    align-items: center;
+    flex-direction: column-reverse;
+    gap: 30px;
+  }
+
+  .footer__list {
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer__title {
+    font-size: 12px;
+    line-height: calc(15 / 12);
+  }
+
+  .footer__text {
+    font-size: 12px;
+    line-height: calc(15 / 12);
+  }
+
+  .footer__list {
+    font-size: 12px;
+    line-height: calc(15 / 12);
   }
 }

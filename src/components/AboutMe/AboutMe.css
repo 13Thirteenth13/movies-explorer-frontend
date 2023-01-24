@@ -39,6 +39,7 @@
 }
 
 .about__info-text {
+  text-indent: 20px;
   margin: 0;
   font-weight: 400;
   font-size: 14px;
@@ -71,14 +72,12 @@
 .about__info-image {
   max-height: 327px;
   max-width: 270px;
-  width: 40%;
   border-radius: 10px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .about__underline {
   position: relative;
-  padding-bottom: 25px;
 }
 
 .about__underline::after {
@@ -89,6 +88,7 @@
   background-color: #000000;
   bottom: 0;
   left: 0;
+  transform: translate(0, 25px);
 }
 
 @media screen and (max-width: 768px) {
@@ -105,5 +105,36 @@
   .about__info-image {
     align-self: center;
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .about {
+    padding: 70px 14px 70px 14px;
+  }
+
+  .about__header {
+    font-size: 18px;
+    line-height: calc(22 / 18);
+  }
+
+  .about__info-title {
+    font-size: 30px;
+    line-height: calc(37 / 30);
+  }
+
+  .about__info-subtitle {
+    font-size: 11px;
+    line-height: calc(16 / 11);
+  }
+
+  .about__info-text {
+    font-size: 11px;
+    line-height: calc(16 / 11);
+  }
+
+  .about__links {
+    font-size: 14px;
+    line-height: calc(17 / 14);
   }
 }
