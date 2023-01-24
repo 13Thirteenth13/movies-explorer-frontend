@@ -1,4 +1,4 @@
-function Footer() {
+const Footer = () => {
   return (
     <footer className="footer">
       <h3 className="footer__title footer__underline">
@@ -20,7 +20,7 @@ function Footer() {
             </li>
             <li>
               <a
-                href="https://github.com/13Thirteenth13/"
+                href="https://github.com/Yandex-Practicum/"
                 className="footer__link"
                 target="_blank"
                 rel="noreferrer"

@@ -1,6 +1,8 @@
-function AboutMe() {
+import { forwardRef } from "react";
+
+const AboutMe = forwardRef((props, ref) => {
   return (
-    <section className="about">
+    <section className="about" id="student" ref={ref}>
       <h2 className="about__header about__underline">Кот</h2>
       <div className="about__info">
         <div className="about__info-description">
@@ -23,22 +25,42 @@ function AboutMe() {
           </p>
           <ul className="about__links">
             <li>
-              <a href="/#" className="about__link">
+              <a
+                href="https://api.whatsapp.com/send?phone=79032555800"
+                className="about__link"
+                target="_blank"
+                rel="noreferrer"
+              >
                 WhatsApp
               </a>
             </li>
             <li>
-              <a href="/#" className="about__link">
+              <a
+                href="https://t.me/Red_Skittles"
+                className="about__link"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Telegram
               </a>
             </li>
             <li>
-              <a href="/#" className="about__link">
+              <a
+                href="mailto:79032555800@ya.ru"
+                className="about__link"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Почта
               </a>
             </li>
             <li>
-              <a href="/#" className="about__link">
+              <a
+                href="https://github.com/13Thirteenth13"
+                className="about__link"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Github
               </a>
             </li>
@@ -52,6 +74,6 @@ function AboutMe() {
       </div>
     </section>
   );
-}
+});
 
 export default AboutMe;

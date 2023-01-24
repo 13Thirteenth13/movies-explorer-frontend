@@ -4,13 +4,29 @@ import Techs from "../Techs/Techs.jsx";
 import AboutMe from "../AboutMe/AboutMe.jsx";
 import Portfolio from "../Portfolio/Portfolio.jsx";
 
-function Main() {
+import { useRef } from "react";
+
+const Main = () => {
+  const refs = {
+    aboutProject: useRef(null),
+    techs: useRef(null),
+    student: useRef(null),
+  };
+
+  const handleButtonClick = (e) => {
+    const name = e.target.attributes.name.value;
+    const element = refs[name].current;
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   return (
     <main className="content">
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
+      <Promo handleButtonClick={handleButtonClick} />
+      <AboutProject ref={refs.aboutProject} />
+      <Techs ref={refs.techs} />
+      <AboutMe ref={refs.student} />
       <Portfolio />
     </main>
   );

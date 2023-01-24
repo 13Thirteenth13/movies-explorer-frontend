@@ -1,4 +1,4 @@
-function Promo() {
+const Promo = ({ handleButtonClick }) => {
   return (
     <section className="promo">
       <h1 className="promo__title">
@@ -6,9 +6,27 @@ function Promo() {
       </h1>
       <nav>
         <ul className="promo__list">
-          <li className="promo__list-item">О проекте</li>
-          <li className="promo__list-item">Технологии</li>
-          <li className="promo__list-item">Студент</li>
+          <li
+            name="aboutProject"
+            className="promo__list-item"
+            onClick={handleButtonClick}
+          >
+            О проекте
+          </li>
+          <li
+            name="techs"
+            className="promo__list-item"
+            onClick={handleButtonClick}
+          >
+            Технологии
+          </li>
+          <li
+            name="techs"
+            className="promo__list-item"
+            onClick={handleButtonClick}
+          >
+            Студент
+          </li>
         </ul>
       </nav>
     </section>
