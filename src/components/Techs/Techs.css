@@ -85,11 +85,7 @@
   }
 }
 
-@media screen and (max-width: 375px) {
-  .techs {
-    padding: 70px 18px;
-  }
-
+@media screen and (max-width: 640px) {
   .techs__title {
     font-size: 18px;
     line-height: calc(22 / 18);
@@ -108,5 +104,11 @@
   .techs__list {
     font-size: 12px;
     line-height: calc(15 / 12);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .techs {
+    padding: 70px 18px;
   }
 }

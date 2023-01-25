@@ -6,7 +6,7 @@
   flex-grow: 1;
   margin: 0 auto;
   align-items: center;
-  padding-top: 70px;
+  padding: 70px 0;
 }
 
 .auth__logo {
@@ -132,12 +132,37 @@
   color: #EE3465;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 640px) {
   .auth {
     max-width: 260px;
-    padding-top: 40px;
+    padding: 56px 0 30px;
   }
+
   .auth__title {
     padding-bottom: 40px;
+    align-self: center;
+  }
+
+  .auth__logo {
+    align-self: center;
+  }
+
+  .auth__input {
+    font-weight: 400;
+  }
+
+  .auth__input-label {
+    font-size: 10px;
+    line-height: calc(12 / 10);
+  }
+
+  .auth__link {
+    font-size: 12px;
+    line-height: calc(15 / 12);
+  }
+
+  .auth__link-text {
+    font-size: 12px;
+    line-height: calc(15 / 12);
   }
 }

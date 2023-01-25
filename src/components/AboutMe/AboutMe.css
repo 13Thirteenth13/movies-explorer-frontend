@@ -106,12 +106,6 @@
     align-self: center;
     width: 100%;
   }
-}
-
-@media screen and (max-width: 375px) {
-  .about {
-    padding: 70px 14px 70px 14px;
-  }
 
   .about__header {
     font-size: 18px;
@@ -136,5 +130,11 @@
   .about__links {
     font-size: 14px;
     line-height: calc(17 / 14);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .about {
+    padding: 70px 14px 70px 14px;
   }
 }
