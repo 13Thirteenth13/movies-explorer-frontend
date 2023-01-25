@@ -3,6 +3,7 @@ import AboutProject from "../AboutProject/AboutProject.jsx";
 import Techs from "../Techs/Techs.jsx";
 import AboutMe from "../AboutMe/AboutMe.jsx";
 import Portfolio from "../Portfolio/Portfolio.jsx";
+import NavTab from "../NavTab/NavTab.jsx";
 
 import { useRef } from "react";
 
@@ -23,7 +24,9 @@ const Main = () => {
 
   return (
     <main className="content">
-      <Promo handleButtonClick={handleButtonClick} />
+      <Promo>
+        <NavTab handleButtonClick={handleButtonClick} />
+      </Promo>
       <AboutProject ref={refs.aboutProject} />
       <Techs ref={refs.techs} />
       <AboutMe ref={refs.student} />
