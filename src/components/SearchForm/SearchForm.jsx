@@ -1,9 +1,13 @@
 const SearchForm = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
+
   return (
-    <section className="search">
-      <form className="search__form">
+    <div className="search">
+      <form className="search__form" onSubmit={handleSubmit}>
         <input type="text" className="search__form-input" placeholder="Фильм" />
-        <button className="search__submit"></button>
+        <button className="search__submit" type="submit"></button>
       </form>
       <div className="search__switch-container">
         <label className="search__switch-label">
@@ -11,7 +15,7 @@ const SearchForm = () => {
           <span className="search__switch"></span>
         </label>
       </div>
-    </section >
+    </div >
   );
 }
 
