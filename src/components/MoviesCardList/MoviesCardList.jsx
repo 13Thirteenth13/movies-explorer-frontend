@@ -2,10 +2,10 @@ import { useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import Preloader from "../Preloader/Preloader.jsx"
 
-function MoviesCardList({ moviesList, loading }) {
+const MoviesCardList = ({ moviesList, loading }) => {
   const [countMovies, setCountMovies] = useState(12);
 
-  function handleClickMoreMovies() {
+  const handleClickMoreMovies = () => {
     setCountMovies(countMovies + 12);
   }
 

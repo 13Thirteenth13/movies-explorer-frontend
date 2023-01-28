@@ -2,15 +2,15 @@ import { useLocation } from "react-router-dom";
 
 import { moviesApiAddress } from "../../utils/constants.js";
 
-function MoviesCard({ movie }) {
+const MoviesCard = ({ movie }) => {
   const location = useLocation();
   const path = location.pathname;
-  const isFavorite = path === "/saved-movies";
+  const isSavedMovies = path === "/saved-movies";
   const imageUrl = movie.image.formats.thumbnail.url;
   const hours = Math.floor(movie.duration / 60);
   const minutes = movie.duration % 60;
 
-  function handleClickFavorite(e) {
+  const handleClickFavorite = (e) => {
     const button = e.target;
     if (button.classList.contains("card__favorite_active")) {
       button.classList.remove("card__favorite_active");
@@ -24,10 +24,10 @@ function MoviesCard({ movie }) {
       <div className="card__header">
         <div>
           <h3 className="card__title">{movie.nameRU}</h3>
-          <p className="card__duration">{`${hours}ч ${minutes}`}м</p>
+          <p className="card__duration">{`${hours}ч ${minutes}м`}</p>
         </div>
         <button
-          className={`card__favorite ${isFavorite && "card__favorite_active"}`}
+          className={`card__favorite ${isSavedMovies  && "card__favorite_delete"}`}
           onClick={handleClickFavorite}
         ></button>
       </div>

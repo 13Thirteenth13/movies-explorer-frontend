@@ -1,0 +1,113 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  max-width: 410px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 74px 0 70px;
+}
+
+.profile__title {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: calc(29 / 24);
+}
+
+.profile__form {
+  padding-top: 123px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.profile__label {
+  position: relative;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: calc(13 / 11);
+}
+
+.profile__label:first-child:before {
+  position: absolute;
+  content: "Имя";
+}
+
+.profile__label:nth-last-child(2):before {
+  position: absolute;
+  content: "E-mail";
+}
+
+.profile__input {
+  background-color: transparent;
+  border: none;
+  text-align: end;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: calc(13 / 11);
+}
+
+.profile__input:focus {
+  border-bottom: 1px solid #2BE080;
+  outline: none;
+}
+
+.profile__submit {
+  margin-top: 220px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: calc(16 / 13);
+}
+
+.profile__logout {
+  text-decoration: none;
+  padding-top: 16px;
+  color: #EE3465;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: calc(16 / 11);
+}
+
+.profile__underline {
+  position: relative;
+}
+
+.profile__underline::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: #E8E8E8;
+  bottom: 0;
+  left: 0;
+  transform: translate(0, 20px);
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    padding: 236px 30px 239px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profile__submit {
+    font-size: 12px;
+    line-height: calc(15 / 12);
+  }
+  .profile__logout {
+    font-size: 12px;
+    line-height: calc(15 / 12);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .profile {
+    padding: 70px 30px 40px;
+  }
+}

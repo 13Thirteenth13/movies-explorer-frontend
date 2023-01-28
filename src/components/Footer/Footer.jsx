@@ -20,7 +20,7 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="https://github.com/Yandex-Practicum/"
+                href="https://github.com/13Thirteenth13/movies-explorer-frontend/"
                 className="footer__link"
                 target="_blank"
                 rel="noreferrer"

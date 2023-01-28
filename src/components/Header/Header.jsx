@@ -1,15 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useRef } from "react";
 
-import './Header.css';
 import logo from "../../images/logo.svg";
 
 
-const Header = () => {
+const Header = ({ isAuth }) => {
+  const menuRef = useRef();
   const location = useLocation();
   const path = location.pathname;
-
-  const menuRef = useRef();
 
   const handleOpenMenu = () => {
     const menu = menuRef.current;
@@ -23,27 +21,35 @@ const Header = () => {
 
   return (
     <header className="header">
-      <img src={logo} alt="Логотип" />
-
-      {path === "/movies" || path === "/saved-movies" ? (
+      <Link to="/">
+        <img src={logo} alt="Логотип" />
+      </Link>
+      {isAuth ? (
         <nav className="header__navigate header__navigate-movies">
           <ul className="header__movies" ref={menuRef}>
-            <li className="header__movies-item">
-              <button
-                className="header__burger-close"
-                onClick={handleCloseMenu}>
-              </button>
-              <Link to="/movies" className="header__link">
+            <button className="header__burger-close" onClick={handleCloseMenu}></button>
+            <li className={`header__movies-item ${path === "/" && "header__movies-item_selected"}`}>
+              <Link to="/" className="header__link" onClick={handleCloseMenu}>
+                Главная
+              </Link>
+            </li>
+            <li className={`header__movies-item ${path === "/movies" && "header__movies-item_selected"}`}>
+              <Link to="/movies" className="header__link" onClick={handleCloseMenu}>
                 Фильмы
               </Link>
             </li>
-            <li className="header__movies-item">
-              <Link to="/saved-movies" className="header__link">
+            <li
+              className={`header__movies-item ${path === "/saved-movies" && "header__movies-item_selected"}`}>
+              <Link to="/saved-movies" className="header__link" onClick={handleCloseMenu}>
                 Сохранённые фильмы
               </Link>
             </li>
             <li className="header__movies-item">
-              <Link to="/profile" className="header__link-profile">
+              <Link
+                to="/profile"
+                className="header__link-profile"
+                onClick={handleCloseMenu}
+              >
                 Аккаунт
               </Link>
             </li>

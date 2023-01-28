@@ -72,6 +72,14 @@
   color: inherit;
 }
 
+.header__movies-item:nth-child(2) {
+  display: none;
+}
+
+.header__movies-item_selected {
+  border-bottom: 1px solid #000000;
+}
+
 .header__auth-item:hover {
   opacity: 0.6;
 }
@@ -84,7 +92,7 @@
   display: flex;
   text-align: center;
   flex: 1;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .header__auth-item:last-child {
@@ -138,11 +146,11 @@
 
   .header__navigate-movies {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   .header__movies {
-    position: absolute;
+    position: fixed;
     padding: 30px;
     content: "";
     top: 0;
@@ -167,13 +175,13 @@
     background-color: rgba(0, 0, 0, 0.3);
   }
 
-  .header__movies-item:first-child {
-    margin-top: 105px;
-  }
-
   .header__movies-item:last-child {
     align-items: end;
     margin-bottom: 80px;
+  }
+
+  .header__movies-item:nth-child(2) {
+    display: block;
   }
 
   .header__burger {
@@ -183,8 +191,13 @@
 
 @media screen and (max-width: 640px) {
   .header__movies {
+    width: 100%;
     font-size: 10px;
     line-height: calc(16 / 10);
+  }
+
+  .header__movies:before {
+    display: none;
   }
 
   .header__auth {
@@ -196,6 +209,10 @@
 @media screen and (max-width: 375px) {
   .header {
     padding: 18px 14px;
+  }
+
+  .header__auth {
+    gap: 14px;
   }
 
   .header__links {
