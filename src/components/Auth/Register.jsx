@@ -20,7 +20,7 @@ const  Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const navigateFunc = () => navigate("/sign-in");
+    navigate("/sign-in");
     console.log(e);
   };
 
