@@ -10,7 +10,7 @@ import SavedMovies from "../SavedMovies/SavedMovies.jsx";
 import Profile from "../Profile/Profile.jsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 
-import api from "../../utils/Api.js"
+import api from "../../utils/api.js"
 
 const App = () => {
   const isAuth = true;
