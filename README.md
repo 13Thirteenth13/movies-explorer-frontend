@@ -7,3 +7,5 @@
 * IP 51.250.74.183
 * Frontend
 * Backend https://api.movies-exp.thirteenth.nomoredomains.club
+*
+* [Ссылка на сгенерированный макет](https://disk.yandex.ru/d/FRLqngiWb2uXhA)
