@@ -1,0 +1,140 @@
+.about {
+  padding: 110px 70px 125px 70px;
+}
+
+.about__header {
+  width: 100%;
+  margin: 0;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: calc(27 / 22);
+}
+
+.about__info {
+  display: flex;
+  padding-top: 65px;
+  gap: 50px;
+}
+
+.about__info-description {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+}
+
+.about__info-title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: calc(58 / 50);
+}
+
+.about__info-subtitle {
+  padding-top: 18px;
+  padding-bottom: 26px;
+  margin: 0;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: calc(20 / 18);
+}
+
+.about__info-text {
+  text-indent: 20px;
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: calc(22 / 14);
+}
+
+.about__links {
+  display: flex;
+  list-style-type: none;
+  padding: 40px 0 0;
+  height: 100%;
+  align-items: flex-end;
+  gap: 20px;
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: calc(17 / 14);
+}
+
+.about__link {
+  text-decoration: none;
+  color: #000000;
+  transition: opacity 0.6s;
+}
+
+.about__link:hover {
+  opacity: 0.6;
+}
+
+.about__info-image {
+  max-height: 327px;
+  max-width: 270px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.about__underline {
+  position: relative;
+}
+
+.about__underline::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: #000000;
+  bottom: 0;
+  left: 0;
+  transform: translate(0, 25px);
+}
+
+@media screen and (max-width: 768px) {
+  .about {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .about__info {
+    flex-direction: column-reverse;
+  }
+
+  .about__info-image {
+    align-self: center;
+    width: 100%;
+  }
+
+  .about__header {
+    font-size: 18px;
+    line-height: calc(22 / 18);
+  }
+
+  .about__info-title {
+    font-size: 30px;
+    line-height: calc(37 / 30);
+  }
+
+  .about__info-subtitle {
+    font-size: 11px;
+    line-height: calc(16 / 11);
+  }
+
+  .about__info-text {
+    font-size: 11px;
+    line-height: calc(16 / 11);
+  }
+
+  .about__links {
+    font-size: 14px;
+    line-height: calc(17 / 14);
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .about {
+    padding: 70px 14px 70px 14px;
+  }
+}
