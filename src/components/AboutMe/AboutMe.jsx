@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import cats from "../../images/cats.jpg"
 
 const AboutMe = forwardRef((props, ref) => {
   return (
@@ -68,7 +69,7 @@ const AboutMe = forwardRef((props, ref) => {
         </div>
         <img
           className="about__info-image"
-          src="https://i.ibb.co/mcng9Xs/IMG-20220408-175102-1.jpg"
+          src={cats}
           alt="Фотография котов"
         />
       </div>

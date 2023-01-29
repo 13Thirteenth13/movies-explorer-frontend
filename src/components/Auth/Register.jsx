@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import Input from "../Input/Input.jsx";
 
-const  Register = () => {
+const Register = ({ onRegister, success }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -20,8 +20,9 @@ const  Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/sign-in");
-    console.log(e);
+    onRegister(formData).then((isRedirect) => {
+      isRedirect && navigate("/sign-in");
+    });
   };
 
   return (

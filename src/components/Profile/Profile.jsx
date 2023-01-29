@@ -1,19 +1,39 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const Profile = () => {
+const Profile = ({ user, handleUpdateUser }) => {
+  const [userInfo, setUserInfo] = useState({ name: user.name, email: user.email });
+
+  function handleChange(e) {
+    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    handleUpdateUser(userInfo);
   };
 
   return (
     <section className="profile">
-      <h1 className="profile__title">Привет, Username!</h1>
+      <h1 className="profile__title">Привет, {user.name}!</h1>
       <form action="submit" className="profile__form">
         <label className="profile__label profile__underline">
-          <input type="text" className="profile__input" defaultValue="User" />
+          <input
+            name="name"
+            type="text"
+            className="profile__input"
+            value={userInfo.name}
+            onChange={handleChange}
+          />
         </label>
         <label className="profile__label">
-          <input type="text" className="profile__input" defaultValue="user@test.ru" />
+          <input
+            name="email"
+            type="text"
+            className="profile__input"
+            value={userInfo.email}
+            onChange={handleChange}
+          />
         </label>
         <button type="submit" className="profile__submit" onClick={handleSubmit}>
           Редактировать
