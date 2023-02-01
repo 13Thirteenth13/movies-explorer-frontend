@@ -1,21 +1,32 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect } from "react";
 
-const Profile = ({ user, handleUpdateUser }) => {
-  const [userInfo, setUserInfo] = useState({ name: user.name, email: user.email });
+import { updateUser } from "../../services/actions/user.js";
+import { useStore } from "../../services/StoreProvider.js";
 
-  function handleChange(e) {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+const Profile = () => {
+  const [state, dispatch] = useStore();
+  const userInfo = state.user;
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
+  const handleChange = (e) => {
+    dispatch({
+      type: "UPDATE_USER",
+      user: { [e.target.name]: e.target.value },
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleUpdateUser(userInfo);
+    updateUser(dispatch, state.user);
   };
 
   return (
     <section className="profile">
-      <h1 className="profile__title">Привет, {user.name}!</h1>
+      <h1 className="profile__title">Привет, {userInfo.name}!</h1>
       <form action="submit" className="profile__form">
         <label className="profile__label profile__underline">
           <input
@@ -35,7 +46,11 @@ const Profile = ({ user, handleUpdateUser }) => {
             onChange={handleChange}
           />
         </label>
-        <button type="submit" className="profile__submit" onClick={handleSubmit}>
+        <button
+          type="submit"
+          className="profile__submit"
+          onClick={handleSubmit}
+        >
           Редактировать
         </button>
       </form>

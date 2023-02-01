@@ -22,7 +22,6 @@ class Api {
   updateUser({ name, email }) {
     return fetch(`${this._authApi}/users/me`, {
       method: "PATCH",
-      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({ name, email }),
     }).then(this._handleResponse);
