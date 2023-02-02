@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { onRegister } from "../../services/actions/user.js";
 import Input from "../Input/Input.jsx";
 
-const Register = ({ onRegister, success }) => {
+const Register = ({ success }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

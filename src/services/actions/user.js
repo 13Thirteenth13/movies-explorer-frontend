@@ -60,6 +60,7 @@ export const onRegister = (dispatch, body) => {
       //   isOpen: true,
       //   success: true,
       // });
+      return true;
     })
     .catch((err) => {
       console.log(err);
