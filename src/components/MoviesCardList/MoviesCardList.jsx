@@ -1,13 +1,20 @@
 import { useState } from "react";
+import { useStore } from "../../services/StoreProvider.js";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import Preloader from "../Preloader/Preloader.jsx"
 
 const MoviesCardList = ({ moviesList, loading }) => {
+  const [state] = useStore();
+  const { filterShortFilms } = state.movie;
   const [countMovies, setCountMovies] = useState(12);
+
+  if (filterShortFilms) {
+    moviesList = moviesList.filter((movie) => movie.duration < 60);
+  };
 
   const handleClickMoreMovies = () => {
     setCountMovies(countMovies + 12);
-  }
+  };
 
   return (
     <div className="cards">

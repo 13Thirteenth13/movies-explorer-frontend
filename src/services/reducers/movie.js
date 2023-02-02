@@ -3,10 +3,16 @@ import {
   ADD_FAVORITE_MOVIE,
   REQUEST_MOVIES,
   REQUEST_MOVIES_FAILD,
+  CHANGE_FILTER,
 } from "../actions/movie.js";
 
 export const movieReducer = (state, action) => {
   switch (action.type) {
+    case CHANGE_FILTER:
+      return {
+        ...state,
+        movie: { ...state.movie, filterShortFilms: action.checked },
+      };
     case REQUEST_MOVIES:
       return { ...state, loading: true };
 

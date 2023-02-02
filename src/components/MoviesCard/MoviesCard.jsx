@@ -24,16 +24,19 @@ const MoviesCard = ({ movie }) => {
       <div className="card__header">
         <div>
           <h3 className="card__title">{movie.nameRU}</h3>
-          <p className="card__duration">{`${hours}ч ${minutes}м`}</p>
+          <p className="card__duration">
+            {`${hours === 0 ? "" : hours + "ч"} ${minutes}м`}
+          </p>
         </div>
         <button
-          className={`card__favorite ${isSavedMovies  && "card__favorite_delete"}`}
+          className={`card__favorite ${isSavedMovies && "card__favorite_delete"}`}
           onClick={handleClickFavorite}
         ></button>
       </div>
       <img
-      className="card__image"
-      src={`${moviesApiAddress}${imageUrl}`} alt={movie.nameRU}
+        className="card__image"
+        src={`${moviesApiAddress}${imageUrl}`}
+        alt={movie.nameRU}
       />
     </article>
   );

@@ -1,4 +1,4 @@
 export const userState = {
-  name: "",
-  email: "",
+  name: "user",
+  email: "user@test.ru",
 };

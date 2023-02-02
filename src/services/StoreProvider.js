@@ -2,18 +2,18 @@ import React, { createContext, useReducer, useMemo, useContext } from "react";
 
 import { userState } from "./state/user.js";
 import { movieState } from "./state/movie.js";
-import { toolTip } from "./state/toolTip.js";
+import { toolTipState } from "./state/toolTip.js";
 import { userReducer } from "./reducers/user.js";
 import { movieReducer } from "./reducers/movie.js";
 import { toolTipReducer } from "./reducers/toolTip.js";
 
 
 const globalState = {
-  loggedIn: false,
+  loggedIn: true,
   loading: true,
   user: { ...userState },
   movie: { ...movieState },
-  toolTip,
+  toolTip: { ...toolTipState },
 };
 
 const GlobalContext = createContext(globalState);
