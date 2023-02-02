@@ -1,13 +1,15 @@
 import { Link, useLocation } from "react-router-dom";
 import React, { useRef } from "react";
-
+import { useStore } from "../../services/StoreProvider.js";
 import logo from "../../images/logo.svg";
 
 
-const Header = ({ loggedIn }) => {
+const Header = () => {
   const menuRef = useRef();
   const location = useLocation();
   const path = location.pathname;
+  const [state] = useStore();
+  const { loggedIn } = state;
 
   const handleOpenMenu = () => {
     const menu = menuRef.current;
@@ -27,20 +29,47 @@ const Header = ({ loggedIn }) => {
       {loggedIn ? (
         <nav className="header__navigate header__navigate-movies">
           <ul className="header__movies" ref={menuRef}>
-            <button className="header__burger-close" onClick={handleCloseMenu}></button>
-            <li className={`header__movies-item ${path === "/" && "header__movies-item_selected"}`}>
-              <Link to="/" className="header__link" onClick={handleCloseMenu}>
+            <button
+              className="header__burger-close"
+              onClick={handleCloseMenu}
+            >
+            </button>
+            <li
+              className={
+                `header__movies-item ${path === "/" && "header__movies-item_selected"}`
+              }
+            >
+              <Link
+                to="/"
+                className="header__link"
+                onClick={handleCloseMenu}
+              >
                 Главная
               </Link>
             </li>
-            <li className={`header__movies-item ${path === "/movies" && "header__movies-item_selected"}`}>
-              <Link to="/movies" className="header__link" onClick={handleCloseMenu}>
+            <li
+              className={
+                `header__movies-item ${path === "/movies" && "header__movies-item_selected"}`
+              }
+            >
+              <Link
+                to="/movies"
+                className="header__link"
+                onClick={handleCloseMenu}
+              >
                 Фильмы
               </Link>
             </li>
             <li
-              className={`header__movies-item ${path === "/saved-movies" && "header__movies-item_selected"}`}>
-              <Link to="/saved-movies" className="header__link" onClick={handleCloseMenu}>
+              className={
+                `header__movies-item ${path === "/saved-movies" && "header__movies-item_selected"}`
+              }
+            >
+              <Link
+                to="/saved-movies"
+                className="header__link"
+                onClick={handleCloseMenu}
+              >
                 Сохранённые фильмы
               </Link>
             </li>

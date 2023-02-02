@@ -1,11 +1,15 @@
 import SearchForm from "../SearchForm/SearchForm.jsx";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.jsx";
+import { useStore } from "../../services/StoreProvider.js";
 
-const Movies = ({ moviesList, loading }) => {
+const Movies = () => {
+  const [state] = useStore();
+  const { moviesList } = state.movie;
+
   return (
     <main className="movies">
       <SearchForm />
-      <MoviesCardList moviesList={moviesList} loading={loading} />
+      <MoviesCardList moviesList={moviesList} />
     </main>
   );
 }

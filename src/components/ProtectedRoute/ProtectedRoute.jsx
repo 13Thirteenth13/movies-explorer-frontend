@@ -1,8 +1,11 @@
 import { Navigate } from "react-router-dom";
+import { useStore } from "../../services/StoreProvider.js";
 import Wrap from "../Wrap/Wrap.jsx";
 
-const ProtectedRoute = ({ children, loggedIn }) => {
-  return <Wrap loggedIn={loggedIn}>{loggedIn ? children : <Navigate to="/sign-in" />}</Wrap>;
+const ProtectedRoute = ({ children }) => {
+  const [state] = useStore();
+  const { loggedIn } = state;
+  return <Wrap>{loggedIn ? children : <Navigate to="/sign-in" />}</Wrap>;
 };
 
 export default ProtectedRoute;
