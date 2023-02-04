@@ -5,9 +5,9 @@ import { onLogin } from "../../services/actions/user.js";
 import { useStore } from "../../services/StoreProvider.js";
 import Input from "../Input/Input.jsx";
 
-const Login = ({ success }) => {
+const Login = () => {
   const [state, dispatch] = useStore();
-  const loggedIn = state.loggedIn;
+  const { loggedIn } = state;
   const [error, setError] = useState({ email: "", password: "" });
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
@@ -18,12 +18,13 @@ const Login = ({ success }) => {
   };
 
   useEffect(() => {
-    loggedIn && navigate("/");
+    loggedIn && navigate(-1);
   }, [loggedIn, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(dispatch, formData, state);
+    onLogin(dispatch, formData, state)
+    .then((success) => success && navigate("/movies"));
   };
 
   return (

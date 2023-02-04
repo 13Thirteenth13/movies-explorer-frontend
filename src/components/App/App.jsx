@@ -13,13 +13,18 @@ import InfoToolTip from "../InfoToolTip/InfoToolTip.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { useStore } from "../../services/StoreProvider.js";
 import { getUser } from "../../services/actions/user.js";
+import { getSavedMovies } from "../../services/actions/movie.js";
 
 const App = () => {
-  const [dispatch] = useStore();
+  const [state, dispatch] = useStore();
+  const { loggedIn } = state;
 
   useEffect(() => {
     getUser(dispatch);
-  }, [dispatch]);
+    if (loggedIn) {
+      getSavedMovies(dispatch);
+    }
+  }, [dispatch, loggedIn]);
 
   return (
     <div className="page">
@@ -59,7 +64,6 @@ const App = () => {
         />
         <Route path="/sign-in" element={<Login />} />
         <Route path="/sign-up" element={<Register />} />
-        <Route path="*" element={<NotFoundPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <InfoToolTip />

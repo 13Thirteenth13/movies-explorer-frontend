@@ -1,20 +1,49 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import { useStore } from "../../services/StoreProvider.js";
+import { ADD_SHOWED_MOVIES } from "../../services/actions/movie.js";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import Preloader from "../Preloader/Preloader.jsx"
 
 const MoviesCardList = ({ moviesList }) => {
-  const [state] = useStore();
+  const [state, dispatch] = useStore();
   const { loading } = state;
-  const { filterShortFilms } = state.movie;
-  const [countMovies, setCountMovies] = useState(12);
+  const location = useLocation();
+  const path = location.pathname;
+  const { filterShortFilms, showedMovies, notFound } = state.movie;
+
+  const [countShowMore, setCountShowMore] = useState(3);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  const updateWidth = useCallback(() => {
+    setWidth(window.innerWidth);
+    if (width <= 480) {
+      setCountShowMore(2);
+      return 5;
+    }
+    if (width <= 768) {
+      setCountShowMore(2);
+      return 8;
+    } else {
+      setCountShowMore(3);
+      return 12;
+    }
+  }, [width]);
+
+  useEffect(() => {
+    if (!showedMovies) {
+      dispatch({ type: ADD_SHOWED_MOVIES, count: updateWidth() });
+    }
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
+  }, [dispatch, showedMovies, updateWidth]);
 
   if (filterShortFilms) {
     moviesList = moviesList.filter((movie) => movie.duration < 60);
   };
 
   const handleClickMoreMovies = () => {
-    setCountMovies(countMovies + 3);
+    dispatch({ type: ADD_SHOWED_MOVIES, count: countShowMore });
   };
 
   return (
@@ -22,14 +51,16 @@ const MoviesCardList = ({ moviesList }) => {
       {loading ? (
         <Preloader />
       ) : (
-        <>
+        <>{path === "/movies" && (
+          <p className="cards__message">{notFound}</p>
+        )}
           <div className="cards__list">
-            {moviesList.slice(0, countMovies).map((movie) => (
-              <MoviesCard movie={movie} key={movie.id} />
+            {moviesList.slice(0, showedMovies).map((movie) => (
+              <MoviesCard movie={movie} key={movie.id || movie._id} />
             ))}
           </div>
 
-          {countMovies < moviesList.length && (
+          {showedMovies < moviesList.length && (
             <button
               className="cards__button"
               onClick={handleClickMoreMovies}

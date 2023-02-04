@@ -1,29 +1,110 @@
-import api from "../../utils/api.js";
-
-export const ADD_TO_SAVED_MOVIE = "ADD_TO_SAVED_MOVIE";
-export const DELETE_SAVED_MOVIE = "DELETE_SAVED_MOVIE";
+import mainApi from "../../utils/api/mainApi.js";
+import moviesApi from "../../utils/api/moviesApi.js";
+import { moviesApiAddress } from "../../utils/constants.js";
 
 export const SET_SEARCH_TEXT = "SET_SEARCH_TEXT";
 
 export const REQUEST_MOVIES = "REQUEST_MOVIES";
-export const REQUEST_MOVIES_SUCCESS = "REQUEST_MOVIES_SUCCESS";
-export const REQUEST_MOVIES_FAILD = "REQUEST_MOVIES_SUCCESS";
+export const GET_MOVIES = "GET_MOVIES";
+export const REQUEST_MOVIES_FAILED = "REQUEST_MOVIES_FAILED";
+
+export const GET_SAVED_MOVIES = "GET_SAVED_MOVIES";
+export const POST_TO_SAVED_MOVIES = "POST_TO_SAVED_MOVIES";
+export const DELETE_SAVED_MOVIE = "DELETE_SAVED_MOVIE";
+
+export const ADD_SHOWED_MOVIES = "ADD_SHOWED_MOVIES";
 
 export const CHANGE_FILTER = "CHANGE_FILTER";
 
 export const getMovies = (dispatch) => {
   dispatch({ type: REQUEST_MOVIES });
-  api
+  moviesApi
     .getMovies()
     .then((movies) => {
       dispatch({
-        type: REQUEST_MOVIES_SUCCESS,
+        type: GET_MOVIES,
         moviesList: movies,
       });
     })
     .catch((err) => {
       dispatch({
-        type: REQUEST_MOVIES_FAILD,
+        type: REQUEST_MOVIES_FAILED,
       });
     });
-}
+};
+
+export const getSavedMovies = (dispatch) => {
+  dispatch({ type: REQUEST_MOVIES });
+  mainApi
+    .getSavedMovies()
+    .then((movies) => {
+      dispatch({
+        type: GET_SAVED_MOVIES,
+        movies,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: REQUEST_MOVIES_FAILED,
+      });
+    });
+};
+
+export const saveMovie = (
+  dispatch,
+  {
+    id,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    nameRU,
+    nameEN,
+  }
+) => {
+  const body = {
+    movieId: id,
+    country: country || "Unknown",
+    director,
+    duration,
+    year,
+    description,
+    image: moviesApiAddress + image.url,
+    trailerLink,
+    thumbnail: moviesApiAddress + image.formats.thumbnail.url,
+    nameRU,
+    nameEN: nameEN || nameRU,
+  };
+  mainApi
+    .saveMovie(body)
+    .then((movie) => {
+      dispatch({
+        type: POST_TO_SAVED_MOVIES,
+        movie,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: REQUEST_MOVIES_FAILED,
+      });
+    });
+};
+
+export const deleteMovie = (dispatch, id) => {
+  mainApi
+    .deleteMovie(id)
+    .then((movie) => {
+      dispatch({
+        type: DELETE_SAVED_MOVIE,
+        movie,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: REQUEST_MOVIES_FAILED,
+      });
+    });
+};

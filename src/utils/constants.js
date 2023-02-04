@@ -1,2 +1,3 @@
 export const moviesApiAddress = "https://api.nomoreparties.co";
-export const authApiAddress = "https://api.movies-exp.thirteenth.nomoredomains.club";
+export const backendApiAddress = /* "https://api.movies-exp.thirteenth.nomoredomains.club"; */
+"http://localhost:5000";

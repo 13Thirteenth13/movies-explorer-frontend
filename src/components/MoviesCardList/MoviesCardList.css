@@ -29,6 +29,14 @@
   line-height: calc(15 / 12);
 }
 
+.cards__message {
+  align-self: center;
+  margin: 0;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: calc(24 / 20);
+}
+
 @media screen and (max-width: 768px) {
   .cards {
     padding: 70px 30px;

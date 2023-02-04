@@ -1,27 +1,39 @@
 import {
-  ADD_TO_SAVED_MOVIE,
   DELETE_SAVED_MOVIE,
-  REQUEST_MOVIES_SUCCESS,
   REQUEST_MOVIES,
-  REQUEST_MOVIES_FAILD,
+  GET_MOVIES,
+  REQUEST_MOVIES_FAILED,
   CHANGE_FILTER,
   SET_SEARCH_TEXT,
+  ADD_SHOWED_MOVIES,
+  POST_TO_SAVED_MOVIES,
+  GET_SAVED_MOVIES,
 } from "../actions/movie.js";
 
 export const movieReducer = (state, action) => {
   switch (action.type) {
+    case ADD_SHOWED_MOVIES:
+      return {
+        ...state,
+        movie: { ...state.movie, showedMovies: state.movie.showedMovies + action.count },
+      };
     case CHANGE_FILTER:
       return {
         ...state,
+        movie: { ...state.movie, filterShortFilms: action.checked },
+      };
+
+    case REQUEST_MOVIES:
+      return {
+        ...state,
+        loading: true,
         movie: {
           ...state.movie,
-          filterShortFilms: action.checked
+          notFound: "",
         },
       };
-    case REQUEST_MOVIES:
-      return { ...state, loading: true };
 
-    case REQUEST_MOVIES_SUCCESS:
+    case GET_MOVIES:
       const moviesList = action.moviesList.filter((movie) =>
         `${movie.nameRU} ${movie.nameEN}`.includes(state.movie.searchText)
       );
@@ -30,20 +42,25 @@ export const movieReducer = (state, action) => {
         loading: false,
         movie: {
           ...state.movie,
-          moviesList
+          moviesList,
+          notFound: !moviesList.length ? "Ничего не найдено" : "",
         },
       };
 
-    case REQUEST_MOVIES_FAILD:
+    case GET_SAVED_MOVIES:
       return {
         ...state,
         loading: false,
+        movie: {
+          ...state.movie,
+          savedMovies: action.movies,
+        },
       };
 
-    case ADD_TO_SAVED_MOVIE:
-      console.log(ADD_TO_SAVED_MOVIE);
+    case POST_TO_SAVED_MOVIES:
       return {
         ...state,
+        loading: false,
         movie: {
           ...state.movie,
           savedMovies: [...state.movie.savedMovies, action.movie],
@@ -51,26 +68,32 @@ export const movieReducer = (state, action) => {
       };
 
     case DELETE_SAVED_MOVIE:
-      console.log(DELETE_SAVED_MOVIE);
       const savedMovies = state.movie.savedMovies.filter(
-        (movie) => movie.id !== action.movie.id
+        (movie) => movie.movieId !== action.movie.movieId
       );
       return {
         ...state,
+        loading: false,
         movie: {
           ...state.movie,
           savedMovies,
         },
       };
 
-    case SET_SEARCH_TEXT:
+    case REQUEST_MOVIES_FAILED:
       return {
         ...state,
-        movie: {
-          ...state.movie,
-          searchText: action.text,
+        loading: false,
+        toolTip: {
+          isOpen: true,
+          success: false,
+          message:
+            "Ошибка: отсутствует соединение с интернетом или сервер недоступен",
         },
       };
+
+    case SET_SEARCH_TEXT:
+      return { ...state, movie: { ...state.movie, searchText: action.text } };
 
     default:
       return state;

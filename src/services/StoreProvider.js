@@ -1,19 +1,23 @@
 import React, { createContext, useReducer, useMemo, useContext } from "react";
 
-import { userState } from "./state/user.js";
-import { movieState } from "./state/movie.js";
-import { toolTipState } from "./state/toolTip.js";
 import { userReducer } from "./reducers/user.js";
 import { movieReducer } from "./reducers/movie.js";
 import { toolTipReducer } from "./reducers/toolTip.js";
 
 
 const globalState = {
-  loggedIn: true,
+  loggedIn: false,
   loading: false,
-  user: { ...userState },
-  movie: { ...movieState },
-  toolTip: { ...toolTipState },
+  user: { name: "", email: "", _id: "" },
+  movie: {
+    moviesList: [],
+    savedMovies: [],
+    filterShortFilms: false,
+    searchText: "",
+    notFound: "",
+    showedMovies: 0,
+  },
+  toolTip: { message: "", isOpen: false, success: true },
 };
 
 const GlobalContext = createContext(globalState);
@@ -28,7 +32,7 @@ const reducers = (state, action) => {
   };
 };
 
-export function StoreProvider({ children }) {
+export const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducers, globalState);
   const contextValue = useMemo(() => [state, dispatch], [state, dispatch]);
 
@@ -39,6 +43,6 @@ export function StoreProvider({ children }) {
   );
 }
 
-export function useStore() {
+export const useStore = () => {
   return useContext(GlobalContext);
 }

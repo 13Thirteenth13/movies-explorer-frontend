@@ -1,16 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.jsx";
 import { getMovies, SET_SEARCH_TEXT } from "../../services/actions/movie.js";
 import { useStore } from "../../services/StoreProvider.js";
 
 const SearchForm = () => {
   const [state, dispatch] = useStore();
+  const navigate = useNavigate();
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     dispatch({ type: SET_SEARCH_TEXT, text: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate("/movies");
     getMovies(dispatch);
   };
 
