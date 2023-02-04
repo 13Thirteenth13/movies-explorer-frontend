@@ -1,8 +1,9 @@
 import {
   UPDATE_USER,
   LOGIN_USER,
+  LOGIN_USER_FAILED,
   AUTH_USER,
-  LOGOUT
+  LOGOUT,
 } from "../actions/user.js";
 
 export const userReducer = (state, action) => {
@@ -17,8 +18,16 @@ export const userReducer = (state, action) => {
     case LOGIN_USER:
       return {
         ...state,
-        loggedIn: action.auth,
+        loggedIn: true,
+        toolTip: {
+          success: true,
+          isOpen: true,
+          message: "Успешно!",
+        },
       };
+
+    case LOGIN_USER_FAILED:
+      return { ...state, authMessage: action.message };
 
     case LOGOUT:
       return {

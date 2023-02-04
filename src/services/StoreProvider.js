@@ -8,6 +8,7 @@ import { toolTipReducer } from "./reducers/toolTip.js";
 const globalState = {
   loggedIn: false,
   loading: false,
+  authMessage: "",
   user: { name: "", email: "", _id: "" },
   movie: {
     moviesList: [],

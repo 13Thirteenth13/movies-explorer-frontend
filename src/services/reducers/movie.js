@@ -15,7 +15,10 @@ export const movieReducer = (state, action) => {
     case ADD_SHOWED_MOVIES:
       return {
         ...state,
-        movie: { ...state.movie, showedMovies: state.movie.showedMovies + action.count },
+        movie: {
+          ...state.movie,
+          showedMovies: state.movie.showedMovies + action.count,
+        },
       };
     case CHANGE_FILTER:
       return {

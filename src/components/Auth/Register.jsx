@@ -5,8 +5,11 @@ import logo from "../../images/logo.svg";
 import { onRegister } from "../../services/actions/user.js";
 import Input from "../Input/Input.jsx";
 import { isName, isPassword, isEmail } from "../../utils/validation.js";
+import { useStore } from "../../services/StoreProvider.js";
 
 const Register = () => {
+  const [state, dispatch] = useStore();
+  const { authMessage } = state;
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -61,8 +64,8 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegister(formData).then((isRedirect) => {
-      isRedirect && navigate("/sign-in");
+    onRegister(dispatch, formData).then((success) => {
+      success && navigate("/movies");
     });
   };
 
@@ -93,12 +96,13 @@ const Register = () => {
             error={error.password}
           />
         </div>
+        <span className="auth__message">{authMessage}</span>
         <button
-        className={buttonProps.className}
-        disabled={buttonProps.disabled}
+          className={buttonProps.className}
+          disabled={buttonProps.disabled}
         >
           Зарегистрироваться
-          </button>
+        </button>
       </form>
       <div className="auth__link-container">
         <p className="auth__link-text">Уже зарегестрированны?</p>
