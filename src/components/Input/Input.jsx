@@ -1,6 +1,10 @@
 const Input = ({ title, onChange, name, type = "text", error }) => {
   const requiredProps =
-    type === "text" ? { minLength: 2, maxLength: 30, required: true } : null;
+    type === "text"
+      ? { minLength: 2, maxLength: 30 }
+      : type === "password"
+        ? { minLength: 3 }
+        : null;
 
   return (
     <label className="input-label">
@@ -10,6 +14,7 @@ const Input = ({ title, onChange, name, type = "text", error }) => {
         type={type}
         className={`input ${error && "input__color_error"}`}
         onChange={onChange}
+        required
         {...requiredProps}
       ></input>
       <span className={`input__error ${error && "input__error_visible"}`}>

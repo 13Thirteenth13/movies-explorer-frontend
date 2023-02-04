@@ -53,10 +53,10 @@ export const onLogin = (dispatch, body, state) => {
 };
 
 export const logOut = (dispatch) => {
-  return localStorage.clear()
-  .then(() => {
+  localStorage.clear().then(() => {
     dispatch({ type: LOGOUT });
-  });
+  })
+  .catch(console.log);
 };
 
 export const onRegister = (dispatch, body) => {
@@ -89,5 +89,5 @@ export const getUser = (dispatch) => {
       console.log(user);
       dispatch({ type: AUTH_USER, user });
     })
-    .catch(console.log);
+    .catch(() => console.log("Пользователь не авторизован"));
 };

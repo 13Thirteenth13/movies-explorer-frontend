@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { updateUser } from "../../services/actions/user.js";
+import { logOut, updateUser } from "../../services/actions/user.js";
 import { useStore } from "../../services/StoreProvider.js";
 
 const Profile = () => {
@@ -18,6 +18,10 @@ const Profile = () => {
     e.preventDefault();
     updateUser(dispatch, state.user);
   };
+
+  const handleLogout = () => {
+    logOut(dispatch);
+  }
 
   return (
     <section className="profile">
@@ -49,7 +53,11 @@ const Profile = () => {
           Редактировать
         </button>
       </form>
-      <Link to="/sign-in" className="profile__logout">
+      <Link
+        to="/sign-in"
+        className="profile__logout"
+        onClick={handleLogout}
+      >
         Выйти из аккаунта
       </Link>
     </section>
