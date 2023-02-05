@@ -1,7 +1,6 @@
 import mainApi from "../../utils/api/mainApi.js";
 import * as auth from "../../utils/api/auth.js";
-import { resMessages } from "../../utils/constants";
-import { CLOSE_TOOL_TIP } from "./toolTip";
+import { resMessages } from "../../utils/constants.js";
 
 export const AUTH_USER = "SET_USER";
 export const UPDATE_USER = "UPDATE_USER";
@@ -11,12 +10,15 @@ export const REGISTER_USER = "REGISTER_USER";
 export const LOGOUT = "LOGOUT";
 
 export const updateUser = (dispatch, body) => {
-  mainApi
+  return mainApi
     .updateUser(body)
     .then((data) => {
       dispatch({ type: UPDATE_USER, user: data });
+      return { success: true };
     })
-    .catch((err) => { console.log(err) });
+    .catch((statusCode) => {
+      return { success: false, statusCode };
+    });
 };
 
 export const onLogin = (dispatch, body) => {
@@ -26,9 +28,6 @@ export const onLogin = (dispatch, body) => {
       console.log(token);
       localStorage.setItem("jwt", token);
       dispatch({ type: LOGIN_USER });
-      setTimeout(() => {
-        dispatch({ type: CLOSE_TOOL_TIP });
-      }, 5000);
       return true;
     })
     .catch((statusCode) => {
@@ -41,9 +40,10 @@ export const onLogin = (dispatch, body) => {
 };
 
 export const logOut = (dispatch) => {
-  localStorage.clear().then(() => {
-    dispatch({ type: LOGOUT });
-  })
+  localStorage.clear()
+    .then(() => {
+      dispatch({ type: LOGOUT });
+    })
     .catch(console.log);
 };
 

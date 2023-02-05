@@ -13,7 +13,8 @@ import InfoToolTip from "../InfoToolTip/InfoToolTip.jsx";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { useStore } from "../../services/StoreProvider.js";
 import { getUser } from "../../services/actions/user.js";
-import { getSavedMovies } from "../../services/actions/movie.js";
+import { CLOSE_TOOL_TIP } from "../../services/actions/toolTip.js";
+import { getSavedMovies } from "../../services/actions/savedMovies";
 
 const App = () => {
   const [state, dispatch] = useStore();
@@ -24,7 +25,12 @@ const App = () => {
     if (loggedIn) {
       getSavedMovies(dispatch);
     }
-  }, [dispatch, loggedIn]);
+    if (state.toolTip.isOpen) {
+      setTimeout(() => {
+        dispatch({ type: CLOSE_TOOL_TIP });
+      }, 5000);
+    }
+  }, [dispatch, loggedIn, state.toolTip.isOpen]);
 
   return (
     <div className="page">

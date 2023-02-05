@@ -1,31 +1,65 @@
-import { Link } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { logOut, updateUser } from "../../services/actions/user.js";
+import { logOut, updateUser, UPDATE_USER } from "../../services/actions/user.js";
 import { useStore } from "../../services/StoreProvider.js";
+import { isName, isEmail } from "../../utils/validation.js";
+import { TOOL_TIP } from "../../services/actions/toolTip.js";
+import { resMessages } from "../../utils/constants.js";
+
 
 const Profile = () => {
   const [state, dispatch] = useStore();
   const userInfo = state.user;
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState({ name: userInfo.name, email: userInfo.email });
+  const [buttonProps, setButtonProps] = useState({
+    disabled: true,
+    className: "profile__submit_disabled",
+  });
+
+  const checkEdit = useCallback(() => {
+    if (userInfo.name !== userData.name || userInfo.email !== userData.email) {
+      if (!isName(userInfo.name) && !isEmail(userInfo.email)) {
+        setButtonProps({ disabled: false, className: "profile__submit" });
+        return;
+      }
+    }
+    setButtonProps({ disabled: true, className: "profile__submit_disabled" });
+  }, [userData, userInfo]);
+
+  useEffect(() => {
+    checkEdit();
+  }, [checkEdit]);
 
   const handleChange = (e) => {
-    dispatch({
-      type: "UPDATE_USER",
-      user: { [e.target.name]: e.target.value },
-    });
-  };
+    dispatch({ type: UPDATE_USER, user: { [e.target.name]: e.target.value } });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateUser(dispatch, state.user);
-  };
+    updateUser(dispatch, userInfo).then(({ success, statusCode = 0 }) => {
+      if (success) {
+        dispatch({
+          type: TOOL_TIP,
+          success: true,
+          message: "Данные пользователя успешно изменены!",
+        });
+      } else {
+        dispatch({ type: TOOL_TIP, success: false, message: resMessages[statusCode] });
+      }
+    });
+    setUserData(userInfo);
+  }
 
   const handleLogout = () => {
     logOut(dispatch);
+    navigate("/");
   }
 
   return (
     <section className="profile">
-      <h1 className="profile__title">Привет, {userInfo.name}!</h1>
+      <h1 className="profile__title">Привет, {userData.name}!</h1>
       <form action="submit" className="profile__form">
         <label className="profile__label profile__underline">
           <input
@@ -47,8 +81,9 @@ const Profile = () => {
         </label>
         <button
           type="submit"
-          className="profile__submit"
+          className={buttonProps.className}
           onClick={handleSubmit}
+          disabled={buttonProps.disabled}
         >
           Редактировать
         </button>

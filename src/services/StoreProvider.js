@@ -1,7 +1,8 @@
 import React, { createContext, useReducer, useMemo, useContext } from "react";
 
 import { userReducer } from "./reducers/user.js";
-import { movieReducer } from "./reducers/movie.js";
+import { movieReducer } from "./reducers/mainMovies.js";
+import { savedMovieReducer } from "./reducers/savedMovies.js";
 import { toolTipReducer } from "./reducers/toolTip.js";
 
 
@@ -10,9 +11,15 @@ const globalState = {
   loading: false,
   authMessage: "",
   user: { name: "", email: "", _id: "" },
-  movie: {
-    moviesList: [],
-    savedMovies: [],
+  savedMovie: {
+    movies: [],
+    filterShortFilms: false,
+    searchText: "",
+    notFound: "",
+    showedMovies: 0,
+  },
+  mainMovie: {
+    movies: [],
     filterShortFilms: false,
     searchText: "",
     notFound: "",
@@ -26,7 +33,7 @@ const GlobalContext = createContext(globalState);
 const reducers = (state, action) => {
   return {
     ...state,
-    ...[userReducer, movieReducer, toolTipReducer].reduce(
+    ...[userReducer, movieReducer, savedMovieReducer, toolTipReducer].reduce(
       (objState, reducer) => ({ ...objState, ...reducer(objState, action) }),
       state
     ),

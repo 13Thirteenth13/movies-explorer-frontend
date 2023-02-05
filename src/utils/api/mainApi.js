@@ -4,13 +4,13 @@ class MainApi {
   constructor(address) {
     this._address = address;
     this._headers = {
-      "Content-type": "application/json",
-      'Authorization': 'Bearer ' + localStorage.getItem('jwt'),
-    };
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+    }
   }
 
   _handleResponse(response) {
-    return response.ok ? response.json() : Promise.reject("Ошибка - " + response.message);
+    return response.ok ? response.json() : Promise.reject(response.status);
   }
 
   updateUser({ name, email }) {

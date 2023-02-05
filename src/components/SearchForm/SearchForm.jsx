@@ -1,22 +1,9 @@
-import { useNavigate } from "react-router-dom";
-import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.jsx";
-import { getMovies, SET_SEARCH_TEXT } from "../../services/actions/movie.js";
-import { useStore } from "../../services/StoreProvider.js";
-
-const SearchForm = () => {
-  const [state, dispatch] = useStore();
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    dispatch({ type: SET_SEARCH_TEXT, text: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/movies");
-    getMovies(dispatch);
-  };
-
+const SearchForm = ({
+  searchText,
+  handleChange,
+  handleSubmit,
+  children
+}) => {
   return (
     <div className="search">
       <form className="search__form" onSubmit={handleSubmit}>
@@ -24,13 +11,13 @@ const SearchForm = () => {
           type="text"
           className="search__form-input"
           placeholder="Фильм"
-          value={state.movie.searchText}
+          value={searchText}
           onChange={handleChange}
           required
         />
         <button className="search__submit" type="submit"></button>
       </form>
-      <FilterCheckbox />
+      {children}
     </div >
   );
 };
