@@ -6,7 +6,7 @@
 
 * IP 51.250.74.183
 *
-* Frontend https://movies-exp.thirteenth.nomoredomains.club/movies
+* Frontend https://movies-exp.thirteenth.nomoredomains.club
 *
 * Backend https://api.movies-exp.thirteenth.nomoredomains.club
 *
