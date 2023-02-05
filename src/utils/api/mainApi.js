@@ -14,7 +14,7 @@ class MainApi {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        'Authorization': localStorage.getItem('jwt')
       },
       body: JSON.stringify({ name, email }),
     }).then(this._handleResponse);
@@ -24,7 +24,7 @@ class MainApi {
     return fetch(`${this._address}/movies`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        'Authorization': localStorage.getItem('jwt')
       }
     }).then(this._handleResponse);
   }
@@ -34,7 +34,7 @@ class MainApi {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        'Authorization': localStorage.getItem('jwt')
       },
       body: JSON.stringify(body),
     }).then(this._handleResponse);
@@ -45,7 +45,7 @@ class MainApi {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        'Authorization': localStorage.getItem('jwt')
       },
     }).then(this._handleResponse);
   }

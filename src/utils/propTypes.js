@@ -72,7 +72,9 @@ export const movieCardPT = {
 };
 
 export const cardListPT = {
-  movies: PropTypes.arrayOf(PropTypes.oneOfType([savedMovieShape, mainMovieShape]).isRequired).isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.oneOfType(
+      [savedMovieShape, mainMovieShape]).isRequired).isRequired,
   handleClickMoreMovies: PropTypes.func.isRequired,
   notFound: PropTypes.string.isRequired,
   showedMovies: PropTypes.number.isRequired,
@@ -90,10 +92,19 @@ export const searchFormPT = {
   children: PropTypes.element.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  searchText: PropTypes.string.isRequired
+  searchText: PropTypes.string.isRequired,
 };
 
 export const filterCheckboxPT = {
   onChangeFilter: PropTypes.func.isRequired,
-  filterShortFilms: PropTypes.bool.isRequired
+  filterShortFilms: PropTypes.bool.isRequired,
+};
+
+export const inputPT = {
+  title: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };

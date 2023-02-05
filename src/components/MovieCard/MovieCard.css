@@ -13,8 +13,13 @@
 
 .card__image {
   width: 100%;
-  min-height: 203px;
   height: 100%;
+}
+
+.card__trailer-link {
+  min-height: 203px;
+  margin: 0;
+  padding: 0;
 }
 
 .card__header {
@@ -65,6 +70,7 @@
   background-image: url(../../images/favorite-fill.svg);
   background-color: #2BE080;
 }
+
 .card__favorite_delete {
   background-image: url(../../images/close.svg);
 }
@@ -72,6 +78,9 @@
 @media screen and (max-width: 768px) {
   .card {
     max-width: 339px;
+  }
+
+  .card__trailer-link {
     max-height: 258px;
   }
 }

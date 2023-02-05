@@ -10,18 +10,29 @@ import {
   POST_TO_SAVED_MOVIES,
   GET_SAVED_MOVIES,
   SAVED_MOVIES_NOT_FOUND,
+  RESET_STATE_SAVED_MOVIES,
 } from "../actions/savedMovies.js";
 
 export const savedMovieReducer = (state, action) => {
   switch (action.type) {
+    case RESET_STATE_SAVED_MOVIES:
+      return {
+        ...state,
+        savedMovie: {
+          ...state.savedMovie,
+          movies: state.savedMovie.saved,
+          searchText: "",
+          filterShortFilms: false,
+          notFound: "",
+        },
+      };
+
     case SAVED_MOVIES_NOT_FOUND:
       return {
         ...state,
         savedMovie: {
           ...state.savedMovie,
-          notFound: state.savedMovie.filterShortFilms
-            ? infoMessages.notFound
-            : "",
+          notFound: state.savedMovie.filterShortFilms ? infoMessages.notFound : "",
         },
       };
 
@@ -41,9 +52,7 @@ export const savedMovieReducer = (state, action) => {
           ...state.savedMovie,
           filterShortFilms: action.checked,
           notFound:
-            !action.checked && state.savedMovie.movies.length
-              ? ""
-              : state.savedMovie.notFound,
+            !action.checked && state.savedMovie.movies.length ? "" : state.savedMovie.notFound,
         },
       };
 
@@ -58,34 +67,37 @@ export const savedMovieReducer = (state, action) => {
       };
 
     case SEARCH_SAVED_MOVIES:
-      const moviesList = action.movies.filter((movie) =>
-        `${movie.nameRU} ${movie.nameEN}`.toLowerCase().includes(state.savedMovie.searchText)
+      const searchMovies = state.savedMovie.saved.filter((movie) =>
+        `${movie.nameRU} ${movie.nameEN}`
+          .toLowerCase()
+          .includes(state.savedMovie.searchText.toLowerCase())
       );
       return {
         ...state,
         loading: false,
         savedMovie: {
           ...state.savedMovie,
-          movies: moviesList,
-          notFound: !moviesList.length ? infoMessages.notFound : "",
+          movies: searchMovies,
+          notFound: !searchMovies.length ? infoMessages.notFound : "",
         },
       };
 
     case GET_SAVED_MOVIES:
+      const saved = action.movies.filter((movie) => movie.owner === state.user._id);
       return {
         ...state,
         loading: false,
         savedMovie: {
           ...state.savedMovie,
-          movies: action.movies,
-          saved: action.movies,
+          movies: saved,
+          saved,
         },
       };
 
     case POST_TO_SAVED_MOVIES:
-      const filtered = `${action.movie.nameRU} ${action.movie.nameEN}`.toLowerCase().includes(
-        state.savedMovie.searchText
-      );
+      const filtered = `${action.movie.nameRU} ${action.movie.nameEN}`
+        .toLowerCase()
+        .includes(state.savedMovie.searchText);
       return {
         ...state,
         loading: false,
@@ -96,7 +108,7 @@ export const savedMovieReducer = (state, action) => {
             : [...state.savedMovie.movies],
 
           saved: [...state.savedMovie.saved, action.movie],
-          notFound: filtered ? '' : infoMessages.notFound
+          notFound: filtered ? "" : infoMessages.notFound,
         },
       };
 
@@ -128,7 +140,7 @@ export const savedMovieReducer = (state, action) => {
     case SAVED_MOVIES_SEARCH_TEXT:
       return {
         ...state,
-        savedMovie: { ...state.savedMovie, searchText: action.text.toLowerCase() },
+        savedMovie: { ...state.savedMovie, searchText: action.text },
       };
 
     default:

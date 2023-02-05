@@ -11,6 +11,7 @@ export const DELETE_SAVED_MOVIE = "DELETE_SAVED_MOVIE";
 export const ADD_SHOWED_SAVED_MOVIES = "ADD_SHOWED_SAVED_MOVIES";
 export const SAVED_MOVIES_CHANGE_FILTER = "SAVED_MOVIES_CHANGE_FILTER";
 export const SAVED_MOVIES_NOT_FOUND = "SAVED_MOVIES_NOT_FOUND";
+export const RESET_STATE_SAVED_MOVIES = "RESET_STATE_SAVED_MOVIES";
 
 export const getSavedMovies = (dispatch) => {
   mainApi
@@ -18,23 +19,6 @@ export const getSavedMovies = (dispatch) => {
     .then((movies) => {
       dispatch({
         type: GET_SAVED_MOVIES,
-        movies,
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: REQUEST_SAVED_MOVIES_FAILED,
-      });
-    });
-};
-
-export const searchSavedMovies = (dispatch) => {
-  dispatch({ type: REQUEST_SAVED_MOVIES });
-  mainApi
-    .getSavedMovies()
-    .then((movies) => {
-      dispatch({
-        type: SEARCH_SAVED_MOVIES,
         movies,
       });
     })

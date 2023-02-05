@@ -11,6 +11,8 @@ const Login = () => {
   const [state, dispatch] = useStore();
   const { authMessage } = state;
   const { loggedIn } = state;
+  const [disabled, setDisabled] = useState(false);
+
   const [error, setError] = useState({ email: "", password: "" });
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [buttonProps, setButtonProps] = useState({
@@ -38,9 +40,8 @@ const Login = () => {
 
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const haveSomeError = Object.keys(error).some(
-      (key) => formData[key] === "" || errorMessage
-    );
+    const haveSomeError = Object.keys(error).some((key) => formData[key] === "" || errorMessage);
+
     setButtonProps({
       disabled: haveSomeError,
       className: haveSomeError ? "auth__submit_disabled" : "auth__submit",
@@ -48,13 +49,19 @@ const Login = () => {
   };
 
   useEffect(() => {
-    loggedIn && navigate(-1);
+    loggedIn && navigate("/movies");
   }, [loggedIn, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin(dispatch, formData, state)
-      .then((success) => success && navigate("/movies"));
+    setDisabled(true);
+    setButtonProps({ disabled: true, className: "auth__submit_disabled" });
+    onLogin(dispatch, formData, state).then(() => {
+      setTimeout(() => {
+        setDisabled(false);
+        setButtonProps({ disabled: false, className: "auth__submit" });
+      }, 2000);
+    });
   };
 
   return (
@@ -71,6 +78,7 @@ const Login = () => {
             title="E-mail"
             onChange={handleChange}
             error={error.email}
+            disabled={disabled}
           />
           <Input
             type="password"
@@ -78,12 +86,13 @@ const Login = () => {
             title="Пароль"
             onChange={handleChange}
             error={error.password}
+            disabled={disabled}
           />
         </div>
         <span className="auth__message">{authMessage}</span>
         <button
           className={buttonProps.className}
-          disabled={buttonProps.disabled}
+          disabled={disabled || buttonProps.disabled}
         >
           Войти
         </button>

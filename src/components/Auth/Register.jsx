@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import logo from "../../images/logo.svg";
@@ -9,7 +9,9 @@ import { useStore } from "../../services/StoreProvider.js";
 
 const Register = () => {
   const [state, dispatch] = useStore();
-  const { authMessage } = state;
+  const { authMessage, loggedIn } = state;
+  const [disabled, setDisabled] = useState(false);
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -54,21 +56,26 @@ const Register = () => {
 
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const haveSomeError = Object.keys(error).some(
-      (key) => formData[key] === "" || errorMessage
-    );
+    const haveSomeError = Object.keys(error).some((key) => formData[key] === "" || errorMessage);
     setButtonProps({
       disabled: haveSomeError,
       className: haveSomeError ? "auth__submit_disabled" : "auth__submit",
     });
   };
 
+  useEffect(() => {
+    loggedIn && navigate("/movies");
+  }, [loggedIn, navigate]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegister(dispatch, formData).then((success) => {
+    setDisabled(true);
+    setButtonProps({ disabled: true, className: "auth__submit_disabled" });
+    onRegister(dispatch, formData).then(() => {
       setTimeout(() => {
-        success && navigate("/movies");
-      }, 1000);
+        setDisabled(false);
+        setButtonProps({ disabled: false, className: "auth__submit" });
+      }, 2000);
     });
   };
 
@@ -81,10 +88,12 @@ const Register = () => {
       <form className="auth__form" onSubmit={handleSubmit}>
         <div className="auth__input-container">
           <Input
+            type="text"
             name="name"
             title="Имя"
             onChange={handleChange}
             error={error.name}
+            disabled={disabled}
           />
           <Input
             type="email"
@@ -92,6 +101,7 @@ const Register = () => {
             title="E-mail"
             onChange={handleChange}
             error={error.email}
+            disabled={disabled}
           />
           <Input
             type="password"
@@ -99,12 +109,13 @@ const Register = () => {
             title="Пароль"
             onChange={handleChange}
             error={error.password}
+            disabled={disabled}
           />
         </div>
         <span className="auth__message">{authMessage}</span>
         <button
           className={buttonProps.className}
-          disabled={buttonProps.disabled}
+          disabled={disabled || buttonProps.disabled}
         >
           Зарегистрироваться
         </button>

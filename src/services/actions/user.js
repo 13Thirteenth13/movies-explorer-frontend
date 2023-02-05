@@ -46,12 +46,14 @@ export const logOut = (dispatch) => {
 export const onRegister = (dispatch, { name, email, password }) => {
   return auth
     .register({ name, email, password })
-    .then(() => {
+    .then((res) => {
       dispatch({ type: REGISTER_USER });
-      setTimeout(() => {
-        onLogin(dispatch, { email, password });
-      }, 1000);
       return true;
+    })
+    .then((success) => {
+      if (success) {
+        onLogin(dispatch, { email, password });
+      }
     })
     .catch((statusCode) => {
       dispatch({ type: LOGIN_USER_FAILED, message: resMessages[statusCode] });
@@ -66,7 +68,6 @@ export const getUser = (dispatch) => {
   return auth
     .authorize(token)
     .then((user) => {
-      console.log(user);
       dispatch({ type: AUTH_USER, user });
       return true;
     })
