@@ -8,13 +8,15 @@ const MoviesCardList = ({
   movies,
   handleClickMoreMovies,
   notFound,
-  countShowedMovies,
+  showedMovies,
   filterShortFilms,
+  isNotFound,
 }) => {
   const [state, dispatch] = useStore();
   const { loading } = state;
 
   const [countShowMore, setCountShowMore] = useState(3);
+  const [moviesList, setMoviesList] = useState(movies);
   const [width, setWidth] = useState(window.innerWidth);
 
   const updateWidth = useCallback(() => {
@@ -32,17 +34,35 @@ const MoviesCardList = ({
     }
   }, [width]);
 
+  // if (movies.length && filterShortFilms) {
+  //   movies = movies.filter((movie) => movie.duration <= 40);
+  // }
+
   useEffect(() => {
-    if (!countShowedMovies) {
+    if (!showedMovies) {
       handleClickMoreMovies(updateWidth());
     }
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
-  }, [countShowedMovies, dispatch, handleClickMoreMovies, updateWidth]);
+  }, [showedMovies, dispatch, handleClickMoreMovies, updateWidth]);
 
-  if (filterShortFilms) {
-    movies = movies.filter((movie) => movie.duration <= 40);
-  };
+  useEffect(() => {
+    if (movies.length && filterShortFilms) {
+      setMoviesList(movies.filter((movie) => movie.duration <= 40));
+      if (!moviesList.length) {
+        isNotFound();
+      }
+    } else {
+      setMoviesList(movies);
+    }
+  }, [
+    filterShortFilms,
+    isNotFound,
+    movies,
+    movies.length,
+    moviesList.length,
+    setMoviesList,
+  ]);
 
   const handleClick = () => {
     handleClickMoreMovies(countShowMore);
@@ -56,12 +76,12 @@ const MoviesCardList = ({
         <>
           <p className="cards__message">{notFound}</p>
           <div className="cards__list">
-            {movies.slice(0, countShowedMovies).map((movie) => (
+            {moviesList.slice(0, showedMovies).map((movie) => (
               <MoviesCard movie={movie} key={movie.id || movie._id} />
             ))}
           </div>
 
-          {countShowedMovies < movies.length && (
+          {showedMovies < moviesList.length && (
             <button
               className="cards__button"
               onClick={handleClick}

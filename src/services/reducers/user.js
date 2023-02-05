@@ -32,6 +32,7 @@ export const userReducer = (state, action) => {
     case LOGOUT:
       return {
         ...state,
+        loggedIn: false,
         user: { _id: "", name: "", email: "" },
       };
 

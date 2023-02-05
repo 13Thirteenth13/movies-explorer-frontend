@@ -5,6 +5,7 @@ import {
   searchMovies,
   MOVIES_SEARCH_TEXT,
   ADD_SHOWED_MOVIES,
+  MOVIES_NOT_FOUND,
 } from "../../services/actions/mainMovies.js";
 import SearchForm from "../SearchForm/SearchForm.jsx";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.jsx";
@@ -28,6 +29,10 @@ const Movies = () => {
     searchMovies(dispatch);
   };
 
+  const isNotFound = useCallback(() => {
+    dispatch({ type: MOVIES_NOT_FOUND });
+  }, [dispatch]);
+
   const handleClickMoreMovies = useCallback(
     (count) => {
       dispatch({ type: ADD_SHOWED_MOVIES, count });
@@ -50,6 +55,7 @@ const Movies = () => {
       <MoviesCardList
         {...state.mainMovie}
         handleClickMoreMovies={handleClickMoreMovies}
+        isNotFound={isNotFound}
       />
     </main>
   );

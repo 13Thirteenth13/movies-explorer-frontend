@@ -1,3 +1,4 @@
+import { infoMessages } from "../../utils/constants.js";
 import {
   REQUEST_MOVIES,
   SEARCH_MOVIES,
@@ -5,10 +6,22 @@ import {
   MOVIES_CHANGE_FILTER,
   MOVIES_SEARCH_TEXT,
   ADD_SHOWED_MOVIES,
+  MOVIES_NOT_FOUND,
 } from "../actions/mainMovies.js";
 
 export const movieReducer = (state, action) => {
   switch (action.type) {
+    case MOVIES_NOT_FOUND:
+      return {
+        ...state,
+        mainMovie: {
+          ...state.mainMovie,
+          notFound: state.mainMovie.filterShortFilms
+            ? infoMessages.notFound
+            : "",
+        },
+      };
+
     case ADD_SHOWED_MOVIES:
       return {
         ...state,
@@ -21,7 +34,14 @@ export const movieReducer = (state, action) => {
     case MOVIES_CHANGE_FILTER:
       return {
         ...state,
-        mainMovie: { ...state.mainMovie, filterShortFilms: action.checked },
+        mainMovie: {
+          ...state.mainMovie,
+          filterShortFilms: action.checked,
+          notFound:
+            !action.checked && state.mainMovie.movies.length
+              ? ""
+              : state.mainMovie.notFound,
+        },
       };
 
     case REQUEST_MOVIES:
@@ -44,7 +64,7 @@ export const movieReducer = (state, action) => {
         mainMovie: {
           ...state.mainMovie,
           movies: moviesList,
-          notFound: !moviesList.length ? "Ничего не найдено" : "",
+          notFound: !moviesList.length ? infoMessages.notFound : "",
         },
       };
 
@@ -55,13 +75,15 @@ export const movieReducer = (state, action) => {
         toolTip: {
           isOpen: true,
           success: false,
-          message:
-            "Ошибка: отсутствует соединение с интернетом или сервер недоступен",
+          message: infoMessages.requestMoviesFailed,
         },
       };
 
     case MOVIES_SEARCH_TEXT:
-      return { ...state, mainMovie: { ...state.mainMovie, searchText: action.text } };
+      return {
+        ...state,
+        mainMovie: { ...state.mainMovie, searchText: action.text },
+      };
 
     default:
       return state;

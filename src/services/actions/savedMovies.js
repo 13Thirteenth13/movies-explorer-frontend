@@ -3,20 +3,16 @@ import { moviesApiAddress } from "../../utils/constants.js";
 
 export const SAVED_MOVIES_SEARCH_TEXT = "SAVED_MOVIES_SEARCH_TEXT";
 export const SEARCH_SAVED_MOVIES = "SEARCH_SAVED_MOVIES";
-
-export const REQUEST_SAVED_MOVIES = "SAVED_MOVIES_SEARCH_TEXT";
+export const REQUEST_SAVED_MOVIES = "REQUEST_SAVED_MOVIES";
 export const GET_SAVED_MOVIES = "GET_SAVED_MOVIES";
 export const REQUEST_SAVED_MOVIES_FAILED = "REQUEST_SAVED_MOVIES_FAILED";
-
 export const POST_TO_SAVED_MOVIES = "POST_TO_SAVED_MOVIES";
 export const DELETE_SAVED_MOVIE = "DELETE_SAVED_MOVIE";
-
 export const ADD_SHOWED_SAVED_MOVIES = "ADD_SHOWED_SAVED_MOVIES";
-
 export const SAVED_MOVIES_CHANGE_FILTER = "SAVED_MOVIES_CHANGE_FILTER";
+export const SAVED_MOVIES_NOT_FOUND = "SAVED_MOVIES_NOT_FOUND";
 
 export const getSavedMovies = (dispatch) => {
-  dispatch({ type: REQUEST_SAVED_MOVIES });
   mainApi
     .getSavedMovies()
     .then((movies) => {
@@ -30,7 +26,24 @@ export const getSavedMovies = (dispatch) => {
         type: REQUEST_SAVED_MOVIES_FAILED,
       });
     });
-}
+};
+
+export const searchSavedMovies = (dispatch) => {
+  dispatch({ type: REQUEST_SAVED_MOVIES });
+  mainApi
+    .getSavedMovies()
+    .then((movies) => {
+      dispatch({
+        type: SEARCH_SAVED_MOVIES,
+        movies,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: REQUEST_SAVED_MOVIES_FAILED,
+      });
+    });
+};
 
 export const saveMovie = (
   dispatch,
@@ -73,7 +86,7 @@ export const saveMovie = (
         type: REQUEST_SAVED_MOVIES_FAILED,
       });
     });
-}
+};
 
 export const deleteMovie = (dispatch, id) => {
   mainApi
@@ -89,4 +102,4 @@ export const deleteMovie = (dispatch, id) => {
         type: REQUEST_SAVED_MOVIES_FAILED,
       });
     });
-}
+};

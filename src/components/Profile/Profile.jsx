@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 
 import { logOut, updateUser, UPDATE_USER } from "../../services/actions/user.js";
 import { useStore } from "../../services/StoreProvider.js";
@@ -11,8 +10,10 @@ import { resMessages } from "../../utils/constants.js";
 const Profile = () => {
   const [state, dispatch] = useStore();
   const userInfo = state.user;
-  const navigate = useNavigate();
-  const [userData, setUserData] = useState({ name: userInfo.name, email: userInfo.email });
+  const [userData, setUserData] = useState({
+    name: userInfo.name,
+    email: userInfo.email,
+  });
   const [buttonProps, setButtonProps] = useState({
     disabled: true,
     className: "profile__submit_disabled",
@@ -46,7 +47,11 @@ const Profile = () => {
           message: "Данные пользователя успешно изменены!",
         });
       } else {
-        dispatch({ type: TOOL_TIP, success: false, message: resMessages[statusCode] });
+        dispatch({
+          type: TOOL_TIP,
+          success: false,
+          message: resMessages[statusCode],
+        });
       }
     });
     setUserData(userInfo);
@@ -54,7 +59,6 @@ const Profile = () => {
 
   const handleLogout = () => {
     logOut(dispatch);
-    navigate("/");
   }
 
   return (
@@ -68,6 +72,7 @@ const Profile = () => {
             className="profile__input"
             value={userInfo.name}
             onChange={handleChange}
+            minLength={2}
           />
         </label>
         <label className="profile__label">
@@ -88,13 +93,12 @@ const Profile = () => {
           Редактировать
         </button>
       </form>
-      <Link
-        to="/sign-in"
+      <button
         className="profile__logout"
         onClick={handleLogout}
       >
         Выйти из аккаунта
-      </Link>
+      </button>
     </section>
   );
 }

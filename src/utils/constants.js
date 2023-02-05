@@ -1,6 +1,6 @@
 export const moviesApiAddress = "https://api.nomoreparties.co";
 export const backendApiAddress = /* "https://api.movies-exp.thirteenth.nomoredomains.club"; */
-"http://localhost:5000";
+  "http://localhost:5000";
 
 
 export const regForSymbols = /[_~!@#$%^&*()\[\]+`'";:<>\/\\|=]/g;
@@ -15,8 +15,13 @@ export const validationMessages = {
 };
 
 export const resMessages = {
-  409: "Пользователь с данным email уже существует",
+  409: "Пользователь с данным email уже зарегистрирован",
   401: "Не авторизован / не зарегистрирован",
   500: "Ошибка на сервере",
   400: "Введенные данные невалидны проверьте адрес или введите корректные данные",
+};
+
+export const infoMessages = {
+  notFound: "Ничего не найдено",
+  requestMoviesFailed: "Ошибка: отсутствует соединение с интернетом или сервер недоступен",
 };

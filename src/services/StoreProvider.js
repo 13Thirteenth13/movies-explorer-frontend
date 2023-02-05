@@ -13,6 +13,7 @@ const globalState = {
   user: { name: "", email: "", _id: "" },
   savedMovie: {
     movies: [],
+    saved: [],
     filterShortFilms: false,
     searchText: "",
     notFound: "",

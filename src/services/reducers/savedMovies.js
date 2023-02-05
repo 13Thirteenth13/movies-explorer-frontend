@@ -1,3 +1,4 @@
+import { infoMessages } from "../../utils/constants.js";
 import {
   DELETE_SAVED_MOVIE,
   REQUEST_SAVED_MOVIES,
@@ -8,10 +9,23 @@ import {
   ADD_SHOWED_SAVED_MOVIES,
   POST_TO_SAVED_MOVIES,
   GET_SAVED_MOVIES,
+  SAVED_MOVIES_NOT_FOUND,
 } from "../actions/savedMovies.js";
 
 export const savedMovieReducer = (state, action) => {
   switch (action.type) {
+    case SAVED_MOVIES_NOT_FOUND:
+      console.log(state.savedMovie.filterShortFilms);
+      return {
+        ...state,
+        savedMovie: {
+          ...state.savedMovie,
+          notFound: state.savedMovie.filterShortFilms
+            ? infoMessages.notFound
+            : "",
+        },
+      };
+
     case ADD_SHOWED_SAVED_MOVIES:
       return {
         ...state,
@@ -24,7 +38,14 @@ export const savedMovieReducer = (state, action) => {
     case SAVED_MOVIES_CHANGE_FILTER:
       return {
         ...state,
-        savedMovie: { ...state.savedMovie, filterShortFilms: action.checked },
+        savedMovie: {
+          ...state.savedMovie,
+          filterShortFilms: action.checked,
+          notFound:
+            !action.checked && state.savedMovie.saved.length
+              ? ""
+              : infoMessages.notFound,
+        },
       };
 
     case REQUEST_SAVED_MOVIES:
@@ -47,7 +68,7 @@ export const savedMovieReducer = (state, action) => {
         savedMovie: {
           ...state.savedMovie,
           movies: moviesList,
-          notFound: !moviesList.length ? "Ничего не найдено" : "",
+          notFound: !moviesList.length ? infoMessages.notFound : "",
         },
       };
 
@@ -58,16 +79,24 @@ export const savedMovieReducer = (state, action) => {
         savedMovie: {
           ...state.savedMovie,
           movies: action.movies,
+          saved: action.movies,
         },
       };
 
     case POST_TO_SAVED_MOVIES:
+      const filtered = `${action.movie.nameRU} ${action.movie.nameEN}`.includes(
+        state.savedMovie.searchText
+      );
       return {
         ...state,
         loading: false,
         savedMovie: {
           ...state.savedMovie,
-          movies: [...state.savedMovie.movies, action.movie],
+          movies: filtered
+            ? [...state.savedMovie.movies, action.movie]
+            : [...state.savedMovie.movies],
+
+          saved: [...state.savedMovie.saved, action.movie],
         },
       };
 
@@ -92,13 +121,15 @@ export const savedMovieReducer = (state, action) => {
         toolTip: {
           isOpen: true,
           success: false,
-          message:
-            "Ошибка: отсутствует соединение с интернетом или сервер недоступен",
+          message: infoMessages.requestMoviesFailed,
         },
       };
 
     case SAVED_MOVIES_SEARCH_TEXT:
-      return { ...state, savedMovie: { ...state.savedMovie, searchText: action.text } };
+      return {
+        ...state,
+        savedMovie: { ...state.savedMovie, searchText: action.text },
+      };
 
     default:
       return state;

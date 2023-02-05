@@ -40,11 +40,8 @@ export const onLogin = (dispatch, body) => {
 };
 
 export const logOut = (dispatch) => {
-  localStorage.clear()
-    .then(() => {
-      dispatch({ type: LOGOUT });
-    })
-    .catch(console.log);
+  localStorage.clear();
+  dispatch({ type: LOGOUT });
 };
 
 export const onRegister = (dispatch, { name, email, password }) => {
@@ -53,7 +50,9 @@ export const onRegister = (dispatch, { name, email, password }) => {
     .register({ name, email, password })
     .then(() => {
       dispatch({ type: REGISTER_USER });
-      onLogin(dispatch, { name, password });
+      setTimeout(() => {
+        onLogin(dispatch, { email, password });
+      }, 1000);
       return true;
     })
     .catch((statusCode) => {

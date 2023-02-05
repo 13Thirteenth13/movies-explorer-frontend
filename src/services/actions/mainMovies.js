@@ -1,16 +1,14 @@
 import moviesApi from "../../utils/api/moviesApi.js";
 
 export const MOVIES_SEARCH_TEXT = "SET_SEARCH_TEXT";
-
 export const REQUEST_MOVIES = "REQUEST_MOVIES";
 export const SEARCH_MOVIES = "SEARCH_MOVIES";
 export const REQUEST_MOVIES_FAILED = "REQUEST_MOVIES_FAILED";
-
 export const ADD_SHOWED_MOVIES = "ADD_SHOWED_MOVIES";
-
 export const MOVIES_CHANGE_FILTER = "MOVIES_CHANGE_FILTER";
+export const MOVIES_NOT_FOUND = "MOVIES_NOT_FOUND";
 
-export function searchMovies(dispatch) {
+export const searchMovies = (dispatch) => {
   dispatch({ type: REQUEST_MOVIES });
   moviesApi
     .getMovies()
@@ -25,4 +23,4 @@ export function searchMovies(dispatch) {
         type: REQUEST_MOVIES_FAILED,
       });
     });
-}
+};
