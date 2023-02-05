@@ -11,3 +11,4 @@
 * Backend https://api.movies-exp.thirteenth.nomoredomains.club
 *
 * [Ссылка на сгенерированный макет](https://disk.yandex.ru/d/FRLqngiWb2uXhA)
+* [Ссылка на пул реквест](https://github.com/13Thirteenth13/movies-explorer-frontend/pull/4)
