@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, } from "react";
 
 import {
   searchSavedMovies,
@@ -14,14 +14,13 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.jsx";
 
 const SavedMovies = () => {
   const [state, dispatch] = useStore();
-  const { searchText, filterShortFilms } = state.savedMovie;
+  const movieCardListProps = state.savedMovie;
 
   const onChangeFilter = (e) => {
     dispatch({ type: SAVED_MOVIES_CHANGE_FILTER, checked: e.target.checked });
   };
 
   const handleChange = (e) => {
-    console.log(SAVED_MOVIES_SEARCH_TEXT);
     dispatch({ type: SAVED_MOVIES_SEARCH_TEXT, text: e.target.value });
   };
 
@@ -44,17 +43,17 @@ const SavedMovies = () => {
   return (
     <main className="movies">
       <SearchForm
-        searchText={searchText}
+        searchText={movieCardListProps.searchText}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       >
         <FilterCheckbox
-          filterShortFilms={filterShortFilms}
+          filterShortFilms={movieCardListProps.filterShortFilms}
           onChangeFilter={onChangeFilter}
         />
       </SearchForm>
       <MoviesCardList
-        {...state.savedMovie}
+        {...movieCardListProps}
         handleClickMoreMovies={handleClickMoreMovies}
         isNotFound={isNotFound}
       />

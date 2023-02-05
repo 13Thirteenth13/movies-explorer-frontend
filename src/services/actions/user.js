@@ -45,7 +45,6 @@ export const logOut = (dispatch) => {
 };
 
 export const onRegister = (dispatch, { name, email, password }) => {
-  console.log(name, email, password);
   return auth
     .register({ name, email, password })
     .then(() => {

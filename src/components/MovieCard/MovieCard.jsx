@@ -1,35 +1,42 @@
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import { saveMovie, deleteMovie } from "../../services/actions/savedMovies.js";
 import { useStore } from "../../services/StoreProvider.js";
 import { moviesApiAddress } from "../../utils/constants.js";
+import { movieCardPT } from "../../utils/propTypes";
 
-const MoviesCard = ({ movie }) => {
+const MovieCard = ({ movie }) => {
   const [state, dispatch] = useStore();
+  const [isMovieSaved, setIsMovieSaved] = useState();
+  const [savedMovies, setSavedMovies] = useState();
   const location = useLocation();
   const path = location.pathname;
-  const savedMovies = state.savedMovie.saved;
-
-  const movieSaved = savedMovies.find(
-    (savedMovie) => savedMovie.movieId === movie.id || movie.movieId
-  );
 
   const onRouteSavedMovies = path === "/saved-movies";
 
-  const imageUrl = movie.image.formats
-    ? moviesApiAddress + movie.image.url
-    : movie.image;
+  useEffect(() => {
+    setSavedMovies(state.savedMovie.saved)
+  }, [state.savedMovie.saved])
+
+  useEffect(() => {
+    if (savedMovies) {
+      setIsMovieSaved(savedMovies.find(
+        (savedMovie) => savedMovie.movieId === (movie.id || movie.movieId)))
+    }
+  }, [movie.id, movie.movieId, savedMovies, state.savedMovie.saved]);
+
+  const imageUrl = movie.image.formats ? moviesApiAddress + movie.image.url : movie.image;
   const hours = Math.floor(movie.duration / 60);
   const minutes = movie.duration % 60;
 
   const buttonClassName =
-    (movieSaved && !onRouteSavedMovies && "card__favorite_active") ||
+    (isMovieSaved && !onRouteSavedMovies && "card__favorite_active") ||
     (onRouteSavedMovies && "card__favorite_delete");
 
   const handleClickFavorite = () => {
-    console.log(state);
-    if (movieSaved || onRouteSavedMovies) {
-      deleteMovie(dispatch, movieSaved._id);
+    if (onRouteSavedMovies || isMovieSaved) {
+      deleteMovie(dispatch, isMovieSaved._id);
     } else {
       saveMovie(dispatch, movie);
     }
@@ -58,4 +65,6 @@ const MoviesCard = ({ movie }) => {
   );
 }
 
-export default MoviesCard;
+MovieCard.propTypes = movieCardPT;
+
+export default MovieCard;

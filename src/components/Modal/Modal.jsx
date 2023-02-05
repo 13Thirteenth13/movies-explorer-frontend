@@ -1,13 +1,16 @@
 import { useCallback, useEffect } from "react";
-import successIcon from "../../images/success-icon.svg";
-import failIcon from "../../images/fail-icon.svg";
+import ReactDOM from "react-dom";
+
 import { useStore } from "../../services/StoreProvider.js";
 import { CLOSE_TOOL_TIP } from "../../services/actions/toolTip.js";
+import PropTypes from "prop-types";
 
-const InfoToolTip = () => {
+const modalRoot = document.getElementById("modal");
+
+const Modal = ({ children }) => {
   const [state, dispatch] = useStore();
 
-  const { toolTip } = state;
+  const { isOpen } = state.toolTip;
 
   const onClose = useCallback(() => {
     dispatch({ type: CLOSE_TOOL_TIP });
@@ -29,28 +32,25 @@ const InfoToolTip = () => {
     };
   }, [handleCloseByEsc]);
 
-  const { success, message, isOpen } = toolTip;
-
-  return (
-    <div className={`popup ${isOpen && "popup_opened"}`} onClick={onClose}>
-      <div className="popup__container">
+  return ReactDOM.createPortal(
+    <div className={`modal ${isOpen && "modal_opened"}`}>
+      <div className="modal__overlay" onClick={onClose}></div>
+      <div className="modal__container">
         <button
           onClick={onClose}
           aria-label="Закрыть"
           type="button"
-          className="popup__close"
+          className="modal__close"
         ></button>
-        <img
-          className="popup__icon"
-          src={success ? successIcon : failIcon}
-          alt="Иконка поп апа"
-        />
-        <h3 className="popup__title">
-          {message}
-        </h3>
+        {children}
       </div>
-    </div>
+    </div>,
+    modalRoot
   );
 };
 
-export default InfoToolTip;
+Modal.propTypes = {
+  children: PropTypes.element,
+};
+
+export default Modal;

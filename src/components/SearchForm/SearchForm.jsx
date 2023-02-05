@@ -1,3 +1,5 @@
+import { searchFormPT } from "../../utils/propTypes.js";
+
 const SearchForm = ({
   searchText,
   handleChange,
@@ -21,5 +23,7 @@ const SearchForm = ({
     </div >
   );
 };
+
+SearchForm.propTypes = searchFormPT
 
 export default SearchForm;

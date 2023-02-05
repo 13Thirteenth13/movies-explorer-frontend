@@ -8,13 +8,14 @@ import { Login, Register } from "../Auth";
 import SavedMovies from "../SavedMovies/SavedMovies.jsx";
 import Profile from "../Profile/Profile.jsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
-import InfoToolTip from "../InfoToolTip/InfoToolTip.jsx";
+import InfoToolTip from "../Modal/InfoToolTip.jsx";
+import Modal from "../Modal/Modal.jsx";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { useStore } from "../../services/StoreProvider.js";
 import { getUser } from "../../services/actions/user.js";
 import { CLOSE_TOOL_TIP } from "../../services/actions/toolTip.js";
-import { getSavedMovies } from "../../services/actions/savedMovies";
+import { getSavedMovies } from "../../services/actions/savedMovies.js";
 
 const App = () => {
   const [state, dispatch] = useStore();
@@ -75,7 +76,11 @@ const App = () => {
         <Route path="/sign-up" element={<Register />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <InfoToolTip />
+      {state.toolTip.isOpen && (
+        <Modal>
+          <InfoToolTip />
+        </Modal>
+      )}
     </div>
   );
 }

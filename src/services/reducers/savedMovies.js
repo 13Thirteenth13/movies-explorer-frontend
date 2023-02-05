@@ -15,7 +15,6 @@ import {
 export const savedMovieReducer = (state, action) => {
   switch (action.type) {
     case SAVED_MOVIES_NOT_FOUND:
-      console.log(state.savedMovie.filterShortFilms);
       return {
         ...state,
         savedMovie: {
@@ -42,9 +41,9 @@ export const savedMovieReducer = (state, action) => {
           ...state.savedMovie,
           filterShortFilms: action.checked,
           notFound:
-            !action.checked && state.savedMovie.saved.length
+            !action.checked && state.savedMovie.movies.length
               ? ""
-              : infoMessages.notFound,
+              : state.savedMovie.notFound,
         },
       };
 
@@ -97,20 +96,21 @@ export const savedMovieReducer = (state, action) => {
             : [...state.savedMovie.movies],
 
           saved: [...state.savedMovie.saved, action.movie],
+          notFound: filtered ? '' : infoMessages.notFound
         },
       };
 
     case DELETE_SAVED_MOVIE:
-      const savedMovies = state.savedMovie.movies.filter(
+      const savedMovies = state.savedMovie.saved.filter(
         (movie) => movie.movieId !== action.movie.movieId
       );
-      console.log(savedMovies);
       return {
         ...state,
         loading: false,
         savedMovie: {
           ...state.savedMovie,
           movies: savedMovies,
+          saved: savedMovies,
         },
       };
 

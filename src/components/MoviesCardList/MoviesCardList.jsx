@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 
 import { useStore } from "../../services/StoreProvider.js";
-import MoviesCard from "../MoviesCard/MoviesCard.jsx";
+import { cardListPT } from "../../utils/propTypes";
+import MovieCard from "../MovieCard/MovieCard.jsx";
 import Preloader from "../Preloader/Preloader.jsx"
 
 const MoviesCardList = ({
@@ -34,22 +35,29 @@ const MoviesCardList = ({
     }
   }, [width]);
 
-  // if (movies.length && filterShortFilms) {
-  //   movies = movies.filter((movie) => movie.duration <= 40);
-  // }
+  const filteredMovies = useCallback(() => {
+    return movies.filter((movie) => movie.duration <= 40);
+  }, [movies])
 
   useEffect(() => {
-    if (!showedMovies) {
-      handleClickMoreMovies(updateWidth());
+    if (movies.length && filterShortFilms) {
+      setMoviesList(filteredMovies());
     }
-    window.addEventListener("resize", updateWidth);
+  }, [filterShortFilms, filteredMovies, movies]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!showedMovies) {
+        handleClickMoreMovies(updateWidth());
+      }
+      window.addEventListener("resize", updateWidth);
+    }, 100)
     return () => window.removeEventListener("resize", updateWidth);
   }, [showedMovies, dispatch, handleClickMoreMovies, updateWidth]);
 
   useEffect(() => {
     if (movies.length && filterShortFilms) {
-      setMoviesList(movies.filter((movie) => movie.duration <= 40));
-      if (!moviesList.length) {
+      if (filteredMovies().length === 0) {
         isNotFound();
       }
     } else {
@@ -57,11 +65,12 @@ const MoviesCardList = ({
     }
   }, [
     filterShortFilms,
+    filteredMovies,
     isNotFound,
     movies,
     movies.length,
     moviesList.length,
-    setMoviesList,
+    setMoviesList
   ]);
 
   const handleClick = () => {
@@ -77,7 +86,7 @@ const MoviesCardList = ({
           <p className="cards__message">{notFound}</p>
           <div className="cards__list">
             {moviesList.slice(0, showedMovies).map((movie) => (
-              <MoviesCard movie={movie} key={movie.id || movie._id} />
+              <MovieCard movie={movie} key={movie.id || movie._id} />
             ))}
           </div>
 
@@ -93,6 +102,8 @@ const MoviesCardList = ({
       )}
     </div>
   );
-}
+};
+
+MoviesCardList.propTypes = cardListPT
 
 export default MoviesCardList;

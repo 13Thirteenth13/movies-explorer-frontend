@@ -1,3 +1,5 @@
+import { filterCheckboxPT } from "../../utils/propTypes.js";
+
 const FilterCheckbox = ({ onChangeFilter, filterShortFilms }) => {
   return (
     <div className="filter">
@@ -12,6 +14,8 @@ const FilterCheckbox = ({ onChangeFilter, filterShortFilms }) => {
       </label>
     </div>
   );
-}
+};
+
+FilterCheckbox.propTypes = filterCheckboxPT;
 
 export default FilterCheckbox;
