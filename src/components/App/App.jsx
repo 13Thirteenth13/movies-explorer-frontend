@@ -1,5 +1,5 @@
-import { Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useLayoutEffect } from "react";
 
 import Wrap from "../Wrap/Wrap.jsx";
 import Main from "../Main/Main.jsx";
@@ -16,13 +16,33 @@ import { useStore } from "../../services/StoreProvider.js";
 import { getUser } from "../../services/actions/user.js";
 import { CLOSE_TOOL_TIP } from "../../services/actions/toolTip.js";
 import { getSavedMovies } from "../../services/actions/savedMovies.js";
+import { SET_STATE_MAIN_MOVIES } from "../../services/actions/mainMovies.js";
 
 const App = () => {
   const [state, dispatch] = useStore();
   const { loggedIn } = state;
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const checkDataInStorage = () => {
+    const moviesLocalState = JSON.parse(localStorage.getItem("moviesLocalState"));
+    if (moviesLocalState) {
+      dispatch({ type: SET_STATE_MAIN_MOVIES, mainMovie: moviesLocalState });
+    }
+  };
+
+  useLayoutEffect(() => {
+    getUser(dispatch).then((success) => {
+      if (success) {
+        navigate(location.pathname);
+      }
+    });
+    if (loggedIn) {
+      checkDataInStorage();
+    }
+  }, [loggedIn]);
 
   useEffect(() => {
-    getUser(dispatch);
     if (loggedIn) {
       getSavedMovies(dispatch);
     }
@@ -51,7 +71,7 @@ const App = () => {
         <Route
           path="/movies"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute path="/movies">
               <Movies />
             </ProtectedRoute>
           }
@@ -59,7 +79,7 @@ const App = () => {
         <Route
           path="/saved-movies"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute path="/saved-movies">
               <SavedMovies />
             </ProtectedRoute>
           }
@@ -67,7 +87,7 @@ const App = () => {
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute path="/profile">
               <Profile />
             </ProtectedRoute>
           }

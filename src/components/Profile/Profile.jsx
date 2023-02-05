@@ -59,6 +59,9 @@ const Profile = () => {
 
   const handleLogout = () => {
     logOut(dispatch);
+    if (localStorage.getItem("moviesLocalState")) {
+      localStorage.removeItem("moviesLocalState");
+    }
   }
 
   return (

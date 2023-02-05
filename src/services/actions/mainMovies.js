@@ -7,6 +7,7 @@ export const REQUEST_MOVIES_FAILED = "REQUEST_MOVIES_FAILED";
 export const ADD_SHOWED_MOVIES = "ADD_SHOWED_MOVIES";
 export const MOVIES_CHANGE_FILTER = "MOVIES_CHANGE_FILTER";
 export const MOVIES_NOT_FOUND = "MOVIES_NOT_FOUND";
+export const SET_STATE_MAIN_MOVIES = "SET_STATE_MAIN_MOVIES";
 
 export const searchMovies = (dispatch) => {
   dispatch({ type: REQUEST_MOVIES });

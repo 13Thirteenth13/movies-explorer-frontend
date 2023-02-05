@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 import {
   MOVIES_CHANGE_FILTER,
@@ -15,6 +15,10 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.jsx";
 const Movies = () => {
   const [state, dispatch] = useStore();
   const { searchText, filterShortFilms } = state.mainMovie;
+
+  useEffect(() => {
+    localStorage.setItem("moviesLocalState", JSON.stringify(state.mainMovie));
+  }, [state.mainMovie]);
 
   const onChangeFilter = (e) => {
     dispatch({ type: MOVIES_CHANGE_FILTER, checked: e.target.checked });

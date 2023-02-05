@@ -56,11 +56,9 @@ const MovieCard = ({ movie }) => {
           onClick={handleClickFavorite}
         ></button>
       </div>
-      <img
-        className="card__image"
-        src={imageUrl}
-        alt={movie.nameRU}
-      />
+      <a href={movie.trailerLink} target="_blank" rel="noopener noreferrer">
+        <img className="card__image" src={imageUrl} alt={movie.nameRU} />
+      </a>
     </article>
   );
 }

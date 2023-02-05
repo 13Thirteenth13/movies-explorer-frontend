@@ -25,7 +25,6 @@ export const onLogin = (dispatch, body) => {
   return auth
     .login(body)
     .then(({ token }) => {
-      console.log(token);
       localStorage.setItem("jwt", token);
       dispatch({ type: LOGIN_USER });
       return true;
@@ -64,11 +63,15 @@ export const onRegister = (dispatch, { name, email, password }) => {
 
 export const getUser = (dispatch) => {
   const token = localStorage.getItem("jwt");
-  auth
+  return auth
     .authorize(token)
     .then((user) => {
       console.log(user);
       dispatch({ type: AUTH_USER, user });
+      return true;
     })
-    .catch(() => console.log("Пользователь не авторизован"));
+    .catch(() => {
+      console.log("Пользователь не авторизован.");
+      return false;
+    });
 };

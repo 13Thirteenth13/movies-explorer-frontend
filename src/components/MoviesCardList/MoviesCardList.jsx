@@ -37,7 +37,7 @@ const MoviesCardList = ({
 
   const filteredMovies = useCallback(() => {
     return movies.filter((movie) => movie.duration <= 40);
-  }, [movies])
+  }, [movies]);
 
   useEffect(() => {
     if (movies.length && filterShortFilms) {
@@ -51,7 +51,7 @@ const MoviesCardList = ({
         handleClickMoreMovies(updateWidth());
       }
       window.addEventListener("resize", updateWidth);
-    }, 100)
+    }, 100);
     return () => window.removeEventListener("resize", updateWidth);
   }, [showedMovies, dispatch, handleClickMoreMovies, updateWidth]);
 
@@ -70,7 +70,7 @@ const MoviesCardList = ({
     movies,
     movies.length,
     moviesList.length,
-    setMoviesList
+    setMoviesList,
   ]);
 
   const handleClick = () => {
@@ -104,6 +104,6 @@ const MoviesCardList = ({
   );
 };
 
-MoviesCardList.propTypes = cardListPT
+MoviesCardList.propTypes = cardListPT;
 
 export default MoviesCardList;
