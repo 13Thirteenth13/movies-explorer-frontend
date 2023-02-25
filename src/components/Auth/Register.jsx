@@ -1,27 +1,31 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import Input from "../Input/Input.jsx";
 
-const  Register = () => {
-  const navigate = useNavigate();
+const Register = (props) => {
+  const { onRegister } = props;
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [value, setValue] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState({ name: "", email: "", password: "" });
+  const [isValidForm, setIsValidForm] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError({ ...error, [e.target.name]: e.target.validationMessage });
+    setValue((preValue) => ({
+      ...preValue,
+      [e.target.name]: e.target.value
+    }));
+    setError((preValue) => ({
+      ...preValue,
+      [e.target.name]: e.target.validationMessage
+    }));
+    setIsValidForm(e.target.closest('form').checkValidity())
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/sign-in");
-    console.log(e);
+    onRegister(value, setApiError);
   };
 
   return (
@@ -33,6 +37,7 @@ const  Register = () => {
           <Input
             name="name"
             title="Имя"
+            value={value.name}
             onChange={handleChange}
             error={error.name}
           />
@@ -51,7 +56,8 @@ const  Register = () => {
             error={error.password}
           />
         </div>
-        <button className="auth__submit">Зарегистрироваться</button>
+        <span className="auth__form__error">{apiError}</span>
+        <button className="auth__submit" type="submit" disabled={!isValidForm}>Зарегистрироваться</button>
       </form>
       <div className="auth__link-container">
         <p className="auth__link-text">Уже зарегестрированны?</p>

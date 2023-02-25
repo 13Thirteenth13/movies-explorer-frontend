@@ -1,6 +1,10 @@
 const Input = ({ title, onChange, name, type = "text", error }) => {
   const requiredProps =
-    type === "text" ? { minLength: 2, maxLength: 30, required: true } : null;
+  type === "text"
+    ? { minLength: 2, maxLength: 30 }
+    : type === "password"
+      ? { minLength: 5 }
+      : null;
 
   return (
     <label className="input-label">
