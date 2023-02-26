@@ -1,31 +1,26 @@
-import { useState } from "react";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import Preloader from "../Preloader/Preloader.jsx"
 
-const MoviesCardList = ({ moviesList, loading }) => {
-  const [countMovies, setCountMovies] = useState(12);
-
-  const handleClickMoreMovies = () => {
-    setCountMovies(countMovies + 12);
-  }
+const MoviesCardList = (props) => {
+  const { cards, searchMovies, saveMovie, preloader } = props;
 
   return (
     <div className="cards">
-      {loading ? (
+      {preloader ? (
         <Preloader />
       ) : (
         <>
           <div className="cards__list">
-            {moviesList.slice(0, countMovies).map((movie) => (
-              <MoviesCard movie={movie} key={movie.id} />
-            ))}
+            {cards.map((card) =>
+              <MoviesCard
+                key={card.movieId}
+                card={card}
+                saveMovie={saveMovie}
+              />
+            )}
+            {cards.length === 0 && searchMovies && !preloader &&
+              <span className='cards__button'>Ничего не найдено</span>}
           </div>
-
-          {countMovies < moviesList.length && (
-            <button className="cards__button" onClick={handleClickMoreMovies}>
-              Ещё
-            </button>
-          )}
         </>
       )}
     </div>

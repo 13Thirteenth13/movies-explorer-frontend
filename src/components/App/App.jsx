@@ -12,16 +12,12 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 
 import { CurrentUserContext, defaultUser } from '../../contexts/CurrentUserContext.js';
 import { mainApi } from "../../utils/MainApi.js";
+import { moviesApi } from "../../utils/MoviesApi.js";
 
 const App = () => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(true);
   const [currentUser, setCurrentUser] = useState(defaultUser);
-
-  const [loading, setLoading] = useState(false);
-  const [favoriteMovies, setFavoriteMOvies] = useState([]);
-
-  const [moviesList, setMoviesList] = useState([]);
 
   const Wrap = ({ children, header = true, footer = true }) => {
     return (
@@ -108,6 +104,8 @@ const App = () => {
     setCurrentUser(defaultUser);
     localStorage.clear();
     mainApi.setToken('');
+    mainApi.reset();
+    moviesApi.reset();
     navigate('/');
   };
 
@@ -126,27 +124,31 @@ const App = () => {
           />
           <Route
             path="/movies"
+            component={Movies}
             element={
               <Wrap>
-                <Movies moviesList={moviesList} loading={loading} />
+                <Movies loggedIn={loggedIn} />
               </Wrap>
             }
           />
           <Route
             path="/saved-movies"
+            component={SavedMovies}
             element={
               <Wrap>
-                <SavedMovies moviesList={favoriteMovies} />
+                <SavedMovies loggedIn={loggedIn} />
               </Wrap>
             }
           />
           <Route
             path="/profile"
+            component={Profile}
             element={
               <Wrap footer={false}>
                 <Profile
                   onProfile={updateUser}
                   logOut={logOut}
+                  loggedIn={loggedIn}
                 />
               </Wrap>
             }
