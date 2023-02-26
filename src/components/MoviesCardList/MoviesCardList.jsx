@@ -1,8 +1,12 @@
+import { useLocation } from "react-router-dom";
+
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import Preloader from "../Preloader/Preloader.jsx"
 
 const MoviesCardList = (props) => {
   const { cards, searchMovies, saveMovie, preloader } = props;
+
+  const location = useLocation();
 
   return (
     <div className="cards">
@@ -18,7 +22,9 @@ const MoviesCardList = (props) => {
                 saveMovie={saveMovie}
               />
             )}
-            {cards.length === 0 && searchMovies && !preloader &&
+            {(location.pathname === "/movies") && cards.length === 0 && searchMovies && !preloader &&
+              <span className='cards__button'>Ничего не найдено</span>}
+            {(location.pathname === "/saved-movies") && cards.length === 0 &&
               <span className='cards__button'>Ничего не найдено</span>}
           </div>
         </>

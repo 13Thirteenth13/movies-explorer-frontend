@@ -36,6 +36,15 @@ const SearchForm = (props) => {
     setIsDisabledButton(!formRef.current.checkValidity())
   };
 
+  const handleCheckbox = (e) => {
+    const { name, checked } = e.target;
+    const updatedValue = { ...value, [name]: checked };
+
+    localStorage.setItem('search-movies', JSON.stringify(updatedValue));
+    setValue(updatedValue);
+    filterCards(updatedValue);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     filterCards(value);
@@ -66,7 +75,10 @@ const SearchForm = (props) => {
         >
         </button>
       </form>
-      <FilterCheckbox />
+      <FilterCheckbox
+        switchCheckbox={handleCheckbox}
+        valueCheckbox={value.durationMovieShort}
+      />
     </div >
   );
 }
