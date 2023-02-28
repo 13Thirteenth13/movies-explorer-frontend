@@ -10,6 +10,7 @@ import SavedMovies from "../SavedMovies/SavedMovies.jsx";
 import Profile from "../Profile/Profile.jsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { CurrentUserContext, defaultUser } from '../../contexts/CurrentUserContext.js';
 import { mainApi } from "../../utils/MainApi.js";
 import { moviesApi } from "../../utils/MoviesApi.js";
@@ -50,7 +51,6 @@ const App = () => {
     }
   };
 
-  //обновление checkToken
   useEffect(() => {
     checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -126,31 +126,36 @@ const App = () => {
             path="/movies"
             component={Movies}
             element={
+              <ProtectedRoute loggedIn={loggedIn}>
               <Wrap>
-                <Movies loggedIn={loggedIn} />
+                <Movies />
               </Wrap>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/saved-movies"
             component={SavedMovies}
             element={
+              <ProtectedRoute loggedIn={loggedIn}>
               <Wrap>
-                <SavedMovies loggedIn={loggedIn} />
+                <SavedMovies />
               </Wrap>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/profile"
             component={Profile}
             element={
-              <Wrap footer={false}>
-                <Profile
-                  onProfile={updateUser}
-                  logOut={logOut}
-                  loggedIn={loggedIn}
-                />
-              </Wrap>
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Wrap footer={false}>
+                  <Profile
+                    onProfile={updateUser}
+                    logOut={logOut}
+                  />
+                </Wrap>
+              </ProtectedRoute>
             }
           />
           <Route path="/sign-in" element={<Login onLogin={loginUser} />} />

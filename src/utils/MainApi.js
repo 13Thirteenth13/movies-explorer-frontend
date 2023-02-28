@@ -7,7 +7,6 @@ class MainApi {
     this._movies = JSON.parse(localStorage.getItem('saved-movies') || '[]');
   };
 
-  //ошибка
   _parseResponse(res) {
     return res.json()
       .then((data) => {

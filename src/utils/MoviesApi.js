@@ -7,7 +7,6 @@ class MoviesApi {
     this._movies = JSON.parse(localStorage.getItem('local-movies') || '[]');
   };
 
-  //ошибка
   _parseResponse(res) {
     return res.json()
       .then((data) => {
@@ -54,7 +53,6 @@ class MoviesApi {
     }
   };
 
-  //сброс карточек
   reset() {
     this._movies = []
   }

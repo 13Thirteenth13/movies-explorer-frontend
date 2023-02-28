@@ -5,29 +5,29 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList.jsx";
 import { mainApi } from "../../utils/MainApi.js"
 import { moviesApi } from "../../utils/MoviesApi";
 
-const renderCards = () => {
-  const render = {
+const counterMoreCards = () => {
+  const counterCards = {
     start: 12,
     load: 3
   };
   if (window.innerWidth < 1001) {
-    render.start = 8;
-    render.load = 2;
+    counterCards.start = 8;
+    counterCards.load = 2;
   }
   if (window.innerWidth < 706) {
-    render.start = 5;
-    render.load = 1;
+    counterCards.start = 5;
+    counterCards.load = 1;
   }
-  return render;
+  return counterCards;
 }
 
 const Movies = () => {
-  const render = renderCards();
-  const [renderCounter, setRenderCounter] = useState(render.start);
+  const counterCards = counterMoreCards();
+  const [renderCounter, setRenderCounter] = useState(counterCards.start);
 
   const changeCounter = () => {
-    const render = renderCards();
-    setRenderCounter(renderCounter + render.load);
+    const counterCards = counterMoreCards();
+    setRenderCounter(renderCounter + counterCards.load);
   }
 
   const [cards, setCards] = useState([]);
@@ -48,6 +48,7 @@ const Movies = () => {
 
     if (cards.length === 0) {
       const localMovies = JSON.parse(localStorage.getItem('local-movies') || '[]');
+
       if (localMovies.length === 0) {
         const token = localStorage.getItem('jwt');
         mainApi.setToken(token);
@@ -73,7 +74,7 @@ const Movies = () => {
       }
     } else {
       filter(cards);
-      setRenderCounter(render.start);
+      setRenderCounter(counterCards.start);
     }
   };
 
@@ -82,14 +83,17 @@ const Movies = () => {
       mainApi.deleteCard(card._id)
         .then(() => {
           setCards((beatFilmCards) => {
-            const updateMergeCards = beatFilmCards.map(beatCard => {
-              if (beatCard._id === card._id) {
-                beatCard.saved = false;
+            const newMergeCards = beatFilmCards.map(
+              beatFilmCard => {
+              if (beatFilmCard._id === card._id) {
+                beatFilmCard.saved = false;
               }
-              return beatCard;
+              return beatFilmCard;
             })
-            return updateMergeCards;
+            localStorage.setItem('local-movies', JSON.stringify(newMergeCards));
+            return newMergeCards;
           })
+          localStorage.removeItem('saved-movies');
         })
     } else {
       const renderSavedCard = {
@@ -109,16 +113,19 @@ const Movies = () => {
         .then((serverCard) => {
           moviesApi.addCard(serverCard)
           setCards((beatFilmCards) => {
-            const updatedMergedCards = beatFilmCards.map(beatCard => {
-              if (beatCard.id === serverCard.movieId) {
-                beatCard.saved = true;
-                beatCard._id = serverCard._id;
-                beatCard.movieId = serverCard.movieId;
-                beatCard.thumbnail = serverCard.thumbnail;
-              }
-              return beatCard;
-            })
-            return updatedMergedCards;
+            localStorage.removeItem('saved-movies');
+            const newMergeCards = beatFilmCards.map(
+              beatFilmCard => {
+                if (beatFilmCard.id === serverCard.movieId) {
+                  beatFilmCard.saved = true;
+                  beatFilmCard._id = serverCard._id;
+                  beatFilmCard.movieId = serverCard.movieId;
+                  beatFilmCard.thumbnail = serverCard.thumbnail;
+                }
+                return beatFilmCard;
+              })
+              localStorage.setItem('local-movies', JSON.stringify(newMergeCards));
+            return newMergeCards;
           })
         })
     }

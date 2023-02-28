@@ -5,29 +5,29 @@ import SearchForm from "../SearchForm/SearchForm.jsx";
 import { mainApi } from '../../utils/MainApi.js';
 import { moviesApi } from '../../utils/MoviesApi.js';
 
-const renderCards = () => {
-  const render = {
+const counterMoreCards = () => {
+  const counterCards = {
     start: 12,
     load: 3
   };
   if (window.innerWidth < 1001) {
-    render.start = 8;
-    render.load = 2;
+    counterCards.start = 8;
+    counterCards.load = 2;
   }
   if (window.innerWidth < 706) {
-    render.start = 5;
-    render.load = 1;
+    counterCards.start = 5;
+    counterCards.load = 1;
   }
-  return render;
+  return counterCards;
 };
 
 const SavedMovies = () => {
-  const render = renderCards();
-  const [renderCounter, setRenderCounter] = useState(render.start);
+  const counterCards = counterMoreCards();
+  const [renderCounter, setRenderCounter] = useState(counterCards.start);
 
   const changeCounter = () => {
-    const render = renderCards();
-    setRenderCounter(renderCounter + render.load);
+    const counterCards = counterMoreCards();
+    setRenderCounter(renderCounter + counterCards.load);
   };
 
   const [cards, setCards] = useState([]);
@@ -43,9 +43,9 @@ const SavedMovies = () => {
 
   useEffect(() => {
     mainApi.getMoviesCard()
-      .then((serverCards) => {
-        setCards(serverCards);
-        setCardsFiltetred(serverCards);
+      .then((cards) => {
+        setCards(cards);
+        setCardsFiltetred(cards);
       })
   }, []);
 

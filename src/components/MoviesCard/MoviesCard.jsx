@@ -11,7 +11,7 @@ const MoviesCard = (props) => {
     saveMovie(card);
 
   const favoriteButton =
-    card.saved ? "card__favorite card__favorite_active" : "card__favorite";
+    card.saved ? "card__favorite_active" : "card__favorite";
 
   return (
     <article className="card">

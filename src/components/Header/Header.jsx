@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import logo from "../../images/logo.svg";
 
