@@ -49,9 +49,9 @@ class MoviesApi {
       localCard.movieId = localCard.id;
       localCard.thumbnail = `https://api.nomoreparties.co/${localCard.image.url}`;
       localCard.saved = true;
-      localStorage.setItem('local-movies', JSON.stringify(this._movies));
-      return this._movies;
     }
+    localStorage.setItem('local-movies', JSON.stringify(this._movies));
+    return this._movies;
   };
 
   reset() {

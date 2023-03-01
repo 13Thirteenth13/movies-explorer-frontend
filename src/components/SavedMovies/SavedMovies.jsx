@@ -50,12 +50,11 @@ const SavedMovies = () => {
   }, []);
 
   const saveMovie = (card) => {
-    mainApi.deleteCard(card._id)
-      .then(() => {
+    mainApi.deleteCard(card._id).then(() => {
         moviesApi.deleteCard(card.movieId)
         setCardsFiltetred((savedCards) => {
           const filteredSavedCards = savedCards.filter(
-            savedCard => savedCard._id !== card._id
+            (savedCard) => savedCard._id !== card._id
           );
           return filteredSavedCards;
         })

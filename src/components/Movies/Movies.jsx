@@ -82,6 +82,7 @@ const Movies = () => {
     if (card.saved) {
       mainApi.deleteCard(card._id)
         .then(() => {
+          moviesApi.deleteCard(card.id);
           setCards((beatFilmCards) => {
             const newMergeCards = beatFilmCards.map(
               beatFilmCard => {
@@ -90,7 +91,6 @@ const Movies = () => {
                 }
                 return beatFilmCard;
               })
-            localStorage.setItem('local-movies', JSON.stringify(newMergeCards));
             return newMergeCards;
           })
         })
@@ -108,6 +108,7 @@ const Movies = () => {
         nameRU: card.nameRU,
         nameEN: card.nameEN,
       };
+
       mainApi.addCard(makeSavedCard)
         .then((serverCard) => {
           moviesApi.addCard(serverCard)
@@ -122,7 +123,6 @@ const Movies = () => {
                 }
                 return beatFilmCard;
               })
-            localStorage.setItem('local-movies', JSON.stringify(newMergeCards));
             return newMergeCards;
           })
         })
