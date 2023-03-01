@@ -17,7 +17,7 @@ class MoviesApi {
       })
   };
 
-  getMoviesCards() {
+  getCards() {
     if (this._movies.length === 0) {
       return fetch(`${this._url}`, {
         headers: this._headers
@@ -30,9 +30,9 @@ class MoviesApi {
     }
   };
 
-  deleteCard(cardId) {
+  deleteCard(id) {
     this._movies = this._movies.map((movie) => {
-      if (movie.id === cardId) {
+      if (movie.id === id) {
         movie.saved = false
       }
       return movie;
@@ -42,7 +42,8 @@ class MoviesApi {
   };
 
   addCard(card) {
-    const localCard = this._movies.find((localCard) => localCard.id === card.movieId);
+    const localCard = this._movies.find(
+      (localCard) => localCard.id === card.movieId);
     if (localCard) {
       localCard._id = card._id;
       localCard.movieId = localCard.id;

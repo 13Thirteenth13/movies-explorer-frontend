@@ -42,7 +42,7 @@ const SavedMovies = () => {
   };
 
   useEffect(() => {
-    mainApi.getMoviesCard()
+    mainApi.getCards()
       .then((cards) => {
         setCards(cards);
         setCardsFiltetred(cards);
@@ -50,12 +50,13 @@ const SavedMovies = () => {
   }, []);
 
   const saveMovie = (card) => {
-
     mainApi.deleteCard(card._id)
       .then(() => {
         moviesApi.deleteCard(card.movieId)
         setCardsFiltetred((savedCards) => {
-          const filteredSavedCards = savedCards.filter(savedCard => savedCard._id !== card._id);
+          const filteredSavedCards = savedCards.filter(
+            savedCard => savedCard._id !== card._id
+          );
           return filteredSavedCards;
         })
       })

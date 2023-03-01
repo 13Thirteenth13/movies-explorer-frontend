@@ -53,7 +53,7 @@ const Movies = () => {
         const token = localStorage.getItem('jwt');
         mainApi.setToken(token);
         setPreloader(true);
-        Promise.all([moviesApi.getMoviesCards(), mainApi.getMoviesCard()])
+        Promise.all([moviesApi.getCards(), mainApi.getCards()])
           .then(([beatFilmCards, localCards]) => {
             const mergeCards = beatFilmCards.map(card => {
               const localCard = localCards.find((localCard) => localCard.movieId === card.id);
@@ -85,18 +85,17 @@ const Movies = () => {
           setCards((beatFilmCards) => {
             const newMergeCards = beatFilmCards.map(
               beatFilmCard => {
-              if (beatFilmCard._id === card._id) {
-                beatFilmCard.saved = false;
-              }
-              return beatFilmCard;
-            })
+                if (beatFilmCard._id === card._id) {
+                  beatFilmCard.saved = false;
+                }
+                return beatFilmCard;
+              })
             localStorage.setItem('local-movies', JSON.stringify(newMergeCards));
             return newMergeCards;
           })
-          localStorage.removeItem('saved-movies');
         })
     } else {
-      const renderSavedCard = {
+      const makeSavedCard = {
         country: card.country,
         director: card.director,
         duration: card.duration,
@@ -109,11 +108,10 @@ const Movies = () => {
         nameRU: card.nameRU,
         nameEN: card.nameEN,
       };
-      mainApi.addCard(renderSavedCard)
+      mainApi.addCard(makeSavedCard)
         .then((serverCard) => {
           moviesApi.addCard(serverCard)
           setCards((beatFilmCards) => {
-            localStorage.removeItem('saved-movies');
             const newMergeCards = beatFilmCards.map(
               beatFilmCard => {
                 if (beatFilmCard.id === serverCard.movieId) {
@@ -124,7 +122,7 @@ const Movies = () => {
                 }
                 return beatFilmCard;
               })
-              localStorage.setItem('local-movies', JSON.stringify(newMergeCards));
+            localStorage.setItem('local-movies', JSON.stringify(newMergeCards));
             return newMergeCards;
           })
         })

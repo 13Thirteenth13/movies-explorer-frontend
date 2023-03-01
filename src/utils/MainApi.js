@@ -17,7 +17,7 @@ class MainApi {
       })
   };
 
-  _buildHeaders() {
+  _makeHeaders() {
     const headers = {
       ...this._headers, authorization: localStorage.getItem('jwt') || ''
     };
@@ -46,14 +46,14 @@ class MainApi {
 
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
-      headers: this._buildHeaders()
+      headers: this._makeHeaders()
     }).then(res => this._parseResponse(res));
   };
 
   editUserInfo(data) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: this._buildHeaders(),
+      headers: this._makeHeaders(),
       body: JSON.stringify({
         name: data.name,
         email: data.email
@@ -61,10 +61,10 @@ class MainApi {
     }).then(res => this._parseResponse(res));
   };
 
-  getMoviesCard() {
+  getCards() {
     if (this._movies.length === 0) {
       return fetch(`${this._url}/movies`, {
-        headers: this._buildHeaders()
+        headers: this._makeHeaders()
       }).then(res => this._parseResponse(res))
         .then((movies) => {
           this._movies = movies;
@@ -78,7 +78,7 @@ class MainApi {
   deleteCard(cardId) {
     return fetch(`${this._url}/movies/${cardId}`, {
       method: 'DELETE',
-      headers: this._buildHeaders()
+      headers: this._makeHeaders()
     }).then(res => this._parseResponse(res))
       .then((movie) => {
         this._movies = this._movies.filter((movie) => movie._id !== cardId);
@@ -90,7 +90,7 @@ class MainApi {
   addCard(data) {
     return fetch(`${this._url}/movies`, {
       method: 'POST',
-      headers: this._buildHeaders(),
+      headers: this._makeHeaders(),
       body: JSON.stringify(data)
     }).then(res => this._parseResponse(res))
       .then((movie) => {
