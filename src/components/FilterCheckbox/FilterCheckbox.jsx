@@ -11,6 +11,7 @@ const FilterCheckbox = (props) => {
         checked={valueCheckbox}
         />
         <span className="filter__switch"></span>
+        <span className="filter__switch-text">Короткометражки</span>
       </label>
     </div>
   );

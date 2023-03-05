@@ -30,7 +30,9 @@ const Register = (props) => {
 
   return (
     <div className="auth">
-      <img src={logo} alt="Логотип" className="auth__logo" />
+      <Link to="/" className="auth__logo-container">
+        <img src={logo} alt="Логотип" />
+      </Link>
       <h2 className="auth__title">Добро пожаловать!</h2>
       <form className="auth__form" onSubmit={handleSubmit}>
         <div className="auth__input-container">
