@@ -20,7 +20,9 @@ const SavedMovies = () => {
 
   const filterCards = (search) => {
     setCardsFiltetred(cards.filter((card) => {
-      const nameMovie = card.nameRU.toLowerCase().includes(search.name.toLowerCase());
+      const nameMovie = card.nameRU
+        .toLowerCase()
+        .includes(search.name.toLowerCase());
       const durationMovieShort = search.durationMovieShort ? card.duration <= 40 : true;
       return nameMovie && durationMovieShort;
     }))
@@ -36,14 +38,14 @@ const SavedMovies = () => {
 
   const saveMovie = (card) => {
     mainApi.deleteCard(card._id).then(() => {
-        moviesApi.deleteCard(card.movieId)
-        setCardsFiltetred((savedCards) => {
-          const filteredSavedCards = savedCards.filter(
-            (savedCard) => savedCard._id !== card._id
-          );
-          return filteredSavedCards;
-        })
+      moviesApi.deleteCard(card.movieId)
+      setCardsFiltetred((savedCards) => {
+        const filteredSavedCards = savedCards.filter(
+          (savedCard) => savedCard._id !== card._id
+        );
+        return filteredSavedCards;
       })
+    })
   };
 
   return (

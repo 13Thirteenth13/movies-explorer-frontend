@@ -67,7 +67,6 @@
 .search__form__error {
   box-sizing: border-box;
   height: 34px;
-  min-width: 100px;
   margin: 0 10px 0;
   padding-top: 12px;
   font-weight: 400;
@@ -75,6 +74,7 @@
   line-height: 12px;
   line-height: calc(12 / 10);
   color: #EE3465;
+  white-space: nowrap;
 }
 
 .search__submit {

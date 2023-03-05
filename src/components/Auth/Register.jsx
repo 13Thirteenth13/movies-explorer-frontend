@@ -59,7 +59,7 @@ const Register = (props) => {
           />
         </div>
         <span className="auth__form__error">{apiError}</span>
-        <button className="auth__submit" type="submit" disabled={!isValidForm}>Зарегистрироваться</button>
+        <button className="auth__submit" type="submit" disabled={isValidForm ? false : true}>Зарегистрироваться</button>
       </form>
       <div className="auth__link-container">
         <p className="auth__link-text">Уже зарегестрированны?</p>

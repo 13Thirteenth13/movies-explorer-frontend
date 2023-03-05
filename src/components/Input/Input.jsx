@@ -1,10 +1,8 @@
-const Input = ({ title, onChange, name, type = "text", error }) => {
+const Input = ({ title, onChange, name, type = "text", pattern, error }) => {
   const requiredProps =
-  type === "text"
-    ? { minLength: 2, maxLength: 30 }
-    : type === "password"
-      ? { minLength: 5 }
-      : null;
+    type === "text" ? { minLength: 2, maxLength: 30 }
+        : type === "password" ? { minLength: 5 }
+          : null;
 
   return (
     <label className="input-label">
@@ -15,7 +13,10 @@ const Input = ({ title, onChange, name, type = "text", error }) => {
         className={`input ${error && "input__color_error"}`}
         onChange={onChange}
         {...requiredProps}
-      ></input>
+        pattern={pattern}
+        required
+      >
+      </input>
       <span className={`input__error ${error && "input__error_visible"}`}>
         {error}
       </span>

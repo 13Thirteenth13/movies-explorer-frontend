@@ -26,13 +26,13 @@ const SearchForm = (props) => {
 
   const handleChange = (e) => {
     const { name, value: inputValue, validationMessage } = e.target;
-
+    const updatedErrMessage = validationMessage === "Заполните это поле." ? "Нужно ввести ключевое слово" : validationMessage;
     const updatedValue = { ...value, [name]: inputValue }
     if (page === 'movies') {
       localStorage.setItem('search-movies', JSON.stringify(updatedValue));
     }
     setValue(updatedValue);
-    setError((state) => ({ ...state, [name]: validationMessage }));
+    setError((state) => ({ ...state, [name]: updatedErrMessage }));
     setIsDisabledButton(!formRef.current.checkValidity())
   };
 
