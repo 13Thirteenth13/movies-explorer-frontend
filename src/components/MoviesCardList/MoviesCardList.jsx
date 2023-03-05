@@ -23,9 +23,9 @@ const MoviesCardList = (props) => {
               />
             )}
             {(location.pathname === "/movies") && cards.length === 0 && searchMovies && !preloader &&
-              <span className='cards__button'>Ничего не найдено</span>}
+              <span className="cards__button">Ничего не найдено</span>}
             {(location.pathname === "/saved-movies") && cards.length === 0 &&
-              <span className='cards__button'>Ничего не найдено</span>}
+              <span className="cards__button">Ничего не найдено</span>}
           </div>
         </>
       )}

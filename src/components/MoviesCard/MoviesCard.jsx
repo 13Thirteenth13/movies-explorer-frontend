@@ -27,16 +27,23 @@ const MoviesCard = (props) => {
           </button>}
         {(location.pathname === "/saved-movies") &&
           <button
-            className='card__favorite card__favorite_delete'
+            className="card__favorite card__favorite_delete"
             onClick={handleSaveMovie}>
           </button>}
       </div>
-      <img
-        className="card__image"
-        src={card.thumbnail}
-        alt={card.nameRU}
-      />
-    </article>
+      <a
+        href={card.trailerLink}
+        className="card__link"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          className="card__image"
+          src={card.thumbnail}
+          alt={card.nameRU}
+        />
+      </a>
+    </article >
   );
 };
 
