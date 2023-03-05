@@ -38,6 +38,6 @@ const MoviesCard = (props) => {
       />
     </article>
   );
-}
+};
 
 export default MoviesCard;

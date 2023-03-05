@@ -14,3 +14,20 @@ export const mainApiAddress = {
     "authorization": "",
   }
 };
+
+
+export const counterMoreCards = () => {
+  const counterCards = {
+    start: 12,
+    load: 3
+  };
+  if (window.innerWidth < 1090) {
+    counterCards.start = 8;
+    counterCards.load = 2;
+  }
+  if (window.innerWidth < 685) {
+    counterCards.start = 5;
+    counterCards.load = 1;
+  }
+  return counterCards;
+};

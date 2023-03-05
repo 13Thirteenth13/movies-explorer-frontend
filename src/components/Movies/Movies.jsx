@@ -4,22 +4,7 @@ import SearchForm from "../SearchForm/SearchForm.jsx";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.jsx";
 import { mainApi } from "../../utils/MainApi.js"
 import { moviesApi } from "../../utils/MoviesApi";
-
-const counterMoreCards = () => {
-  const counterCards = {
-    start: 12,
-    load: 3
-  };
-  if (window.innerWidth < 1001) {
-    counterCards.start = 8;
-    counterCards.load = 2;
-  }
-  if (window.innerWidth < 706) {
-    counterCards.start = 5;
-    counterCards.load = 1;
-  }
-  return counterCards;
-}
+import { counterMoreCards } from '../../utils/constants.js';
 
 const Movies = () => {
   const counterCards = counterMoreCards();
@@ -146,6 +131,6 @@ const Movies = () => {
       </button>}
     </main>
   );
-}
+};
 
 export default Movies;
