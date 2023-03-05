@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Header from "../Header/Header.jsx";
@@ -19,6 +19,7 @@ const App = () => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(true);
   const [currentUser, setCurrentUser] = useState(defaultUser);
+  const [isAuth, setIsAuth] = useState(false);
 
   const Wrap = ({ children, header = true, footer = true }) => {
     return (
@@ -39,6 +40,7 @@ const App = () => {
           if (user) {
             setLoggedIn(true);
             setCurrentUser(user);
+            setIsAuth(true);
           } else {
             logOut();
           }
@@ -100,6 +102,7 @@ const App = () => {
   };
 
   const logOut = () => {
+    setIsAuth(false);
     setLoggedIn(false);
     setCurrentUser(defaultUser);
     localStorage.clear();
@@ -127,9 +130,11 @@ const App = () => {
             component={Movies}
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-              <Wrap>
-                <Movies />
-              </Wrap>
+                <Wrap>
+                  <Movies
+                    component={Main}
+                  />
+                </Wrap>
               </ProtectedRoute>
             }
           />
@@ -138,9 +143,9 @@ const App = () => {
             component={SavedMovies}
             element={
               <ProtectedRoute loggedIn={loggedIn}>
-              <Wrap>
-                <SavedMovies />
-              </Wrap>
+                <Wrap>
+                  <SavedMovies />
+                </Wrap>
               </ProtectedRoute>
             }
           />
@@ -158,8 +163,20 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/sign-in" element={<Login onLogin={loginUser} />} />
-          <Route path="/sign-up" element={<Register onRegister={registerUser} />} />
+          <Route
+            path="/sign-in"
+            component={Login}
+            element={
+              !isAuth ? <Login onLogin={loginUser} /> : <Navigate to="/" />
+            }
+          />
+          <Route
+            path="/sign-up"
+            component={Register}
+            element={
+              !isAuth ? <Register onRegister={registerUser} /> : <Navigate to="/" />
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </CurrentUserContext.Provider>

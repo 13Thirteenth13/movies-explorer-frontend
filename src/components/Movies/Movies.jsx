@@ -13,7 +13,7 @@ const Movies = () => {
   const changeCounter = () => {
     const counterCards = counterMoreCards();
     setRenderCounter(renderCounter + counterCards.load);
-  }
+  };
 
   const [cards, setCards] = useState([]);
   const [cardsFiltered, setCardsFiltetred] = useState([]);
