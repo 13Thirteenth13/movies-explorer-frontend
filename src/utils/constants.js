@@ -7,8 +7,7 @@ export const moviesApiAddress = {
 };
 
 export const mainApiAddress = {
-  url: /* "https://api.movies-exp.thirteenth.nomoredomains.club" */
-  "http://localhost:5000",
+  url: "https://api.movies-exp.thirteenth.nomoredomains.club",
   headers: {
     "content-type": "application/json",
     "authorization": "",

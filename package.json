@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-server": "react-scripts build && scp -r ./build/* thirteenth_13@51.250.74.183:~/movies-explorer-frontend/build"
+    "build-server": "react-scripts build && scp -r ./build/* thirteenth_13@51.250.74.183:~/movies-explorer-frontend/"
   },
   "eslintConfig": {
     "extends": [
