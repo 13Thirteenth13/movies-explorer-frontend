@@ -39,8 +39,9 @@ const SearchForm = (props) => {
   const handleCheckbox = (e) => {
     const { name, checked } = e.target;
     const updatedValue = { ...value, [name]: checked };
-
-    localStorage.setItem('search-movies', JSON.stringify(updatedValue));
+    if (page === 'movies') {
+      localStorage.setItem('search-movies', JSON.stringify(updatedValue));
+    }
     setValue(updatedValue);
     filterCards(updatedValue);
   };
