@@ -5,7 +5,8 @@
 Сервис Movies-explorer в котором можно найти фильмы по запросу и сохранить в личном кабинете.
 
 * IP 51.250.74.183
-* Frontend
+* Frontend https://movies-exp.thirteenth.nomoredomains.club
 * Backend https://api.movies-exp.thirteenth.nomoredomains.club
 *
 * [Ссылка на сгенерированный макет](https://disk.yandex.ru/d/FRLqngiWb2uXhA)
+* [Ссылка на пул реквест](https://github.com/13Thirteenth13/movies-explorer-frontend/pull/7)

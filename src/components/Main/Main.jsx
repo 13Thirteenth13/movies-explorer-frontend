@@ -7,7 +7,7 @@ import NavTab from "../NavTab/NavTab.jsx";
 
 import { useRef } from "react";
 
-const Main = () => {
+const Main = (onProfile, logOut) => {
   const refs = {
     aboutProject: useRef(null),
     techs: useRef(null),

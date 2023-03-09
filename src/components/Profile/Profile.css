@@ -35,7 +35,7 @@
   content: "Имя";
 }
 
-.profile__label:nth-last-child(2):before {
+.profile__label:nth-last-child(3):before {
   position: absolute;
   content: "E-mail";
 }
@@ -50,9 +50,24 @@
   line-height: calc(13 / 11);
 }
 
+.profile__input_color_error {
+  color: #EE3465;
+}
+
 .profile__input:focus {
-  border-bottom: 1px solid #2BE080;
+  border-bottom: 1px solid #E8E8E8;
   outline: none;
+}
+
+.profile__error {
+  box-sizing: border-box;
+  height: 12px;
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  line-height: calc(12 / 10);
+  color: #EE3465;
 }
 
 .profile__submit {
@@ -66,12 +81,29 @@
 }
 
 .profile__logout {
-  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
   padding-top: 16px;
   color: #EE3465;
   font-size: 13px;
   font-weight: 500;
   line-height: calc(16 / 11);
+}
+
+.profile__success {
+  box-sizing: border-box;
+  height: 12px;
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  line-height: calc(12 / 10);
+  color: #2BE080;
+}
+
+.profile__error_visible {
+  opacity: 1;
 }
 
 .profile__underline {

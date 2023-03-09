@@ -1,7 +1,7 @@
 .cards {
   display: flex;
   flex-direction: column;
-  padding: 80px 70px;
+  padding: 80px 70px 0;
   width: 100%;
   box-sizing: border-box;
 }
@@ -24,20 +24,22 @@
   border-radius: 5px;
   cursor: pointer;
   align-self: center;
+  margin-bottom: 80px;
   font-size: 12px;
   font-weight: 500;
   line-height: calc(15 / 12);
+  text-align: center;
 }
 
 @media screen and (max-width: 768px) {
   .cards {
-    padding: 70px 30px;
+    padding: 70px 30px 0;
   }
 }
 
 @media screen and (max-width: 375px) {
   .cards {
-    padding: 40px 10px;
+    padding: 40px 10px 0;
   }
 
   .cards__button {

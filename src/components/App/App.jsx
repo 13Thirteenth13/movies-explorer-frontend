@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Header from "../Header/Header.jsx";
@@ -10,77 +10,176 @@ import SavedMovies from "../SavedMovies/SavedMovies.jsx";
 import Profile from "../Profile/Profile.jsx";
 import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 
-import api from "../../utils/api.js"
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
+import { CurrentUserContext, defaultUser } from '../../contexts/CurrentUserContext.js';
+import { mainApi } from "../../utils/MainApi.js";
+import { moviesApi } from "../../utils/MoviesApi.js";
 
 const App = () => {
-  const isAuth = true;
-  const [loading, setLoading] = useState(false);
-  const [favoriteMovies, setFavoriteMOvies] = useState([]);
-
-  const [moviesList, setMoviesList] = useState([]);
+  const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [currentUser, setCurrentUser] = useState(defaultUser);
+  const [isAuth, setIsAuth] = useState(false);
 
   const Wrap = ({ children, header = true, footer = true }) => {
     return (
       <>
-        {header && <Header isAuth={isAuth} />}
+        {header && <Header loggedIn={loggedIn} />}
         {children}
         {footer && <Footer />}
       </>
     );
   };
 
+  const checkToken = () => {
+    const token = localStorage.getItem('jwt') || '';
+    mainApi.setToken(token);
+    if (token) {
+      mainApi.getUserInfo()
+        .then((user) => {
+          if (user) {
+            setLoggedIn(true);
+            setCurrentUser(user);
+            setIsAuth(true);
+          } else {
+            logOut();
+          }
+        })
+        .catch((err) => {
+          logOut();
+        });
+    } else {
+      logOut();
+    }
+  };
+
   useEffect(() => {
-    setLoading(true);
-    api
-      .getMovies()
-      .then((movies) => {
-        setMoviesList(movies);
-        setFavoriteMOvies(movies.slice(0, 3));
-        setTimeout(() => setLoading(false), 2000);
+    checkToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedIn]);
+
+  const registerUser = (data, callback) => {
+    mainApi.register(data)
+      .then((result) => {
+        setCurrentUser(result);
+        return mainApi.login({ email: data.email, password: data.password })
       })
-      .catch(console.log);
-  }, []);
+      .then((res) => {
+        localStorage.setItem('jwt', res.token);
+        setLoggedIn(true);
+        callback('');
+        navigate('/movies');
+      })
+      .catch((err) => {
+        callback(err.message)
+      })
+  };
+
+  const loginUser = (data, callback) => {
+    mainApi.login(data)
+      .then((res) => {
+        localStorage.setItem('jwt', res.token);
+        setLoggedIn(true);
+        callback('');
+        navigate('/movies');
+      })
+      .catch((err) => {
+        callback(err.message)
+      })
+  };
+
+  const updateUser = (data, callback) => {
+    const token = localStorage.getItem('jwt') || '';
+    mainApi.setToken(token);
+    mainApi.editUserInfo(data)
+      .then((userDataServer) => {
+        setCurrentUser({ ...currentUser, ...userDataServer });
+        callback('');
+      })
+      .catch((err) => {
+        callback(err.message)
+      })
+  };
+
+  const logOut = () => {
+    setIsAuth(false);
+    setLoggedIn(false);
+    setCurrentUser(defaultUser);
+    localStorage.clear();
+    mainApi.setToken('');
+    mainApi.reset();
+    moviesApi.reset();
+    navigate('/');
+  };
 
   return (
     <div className="page">
-      <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <Wrap>
-              <Main />
-            </Wrap>
-          }
-        />
-        <Route
-          path="/movies"
-          element={
-            <Wrap>
-              <Movies moviesList={moviesList} loading={loading} />
-            </Wrap>
-          }
-        />
-        <Route
-          path="/saved-movies"
-          element={
-            <Wrap>
-              <SavedMovies moviesList={favoriteMovies} />
-            </Wrap>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <Wrap footer={false}>
-              <Profile />
-            </Wrap>
-          }
-        />
-        <Route path="/sign-in" element={<Login />} />
-        <Route path="/sign-up" element={<Register />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <Wrap>
+                <Main />
+              </Wrap>
+            }
+          />
+          <Route
+            path="/movies"
+            component={Movies}
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Wrap>
+                  <Movies
+                    component={Main}
+                  />
+                </Wrap>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/saved-movies"
+            component={SavedMovies}
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Wrap>
+                  <SavedMovies />
+                </Wrap>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            component={Profile}
+            element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <Wrap footer={false}>
+                  <Profile
+                    onProfile={updateUser}
+                    logOut={logOut}
+                  />
+                </Wrap>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/sign-in"
+            component={Login}
+            element={
+              !isAuth ? <Login onLogin={loginUser} /> : <Navigate to="/" />
+            }
+          />
+          <Route
+            path="/sign-up"
+            component={Register}
+            element={
+              !isAuth ? <Register onRegister={registerUser} /> : <Navigate to="/" />
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </CurrentUserContext.Provider>
     </div>
   );
 }
