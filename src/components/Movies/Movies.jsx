@@ -4,7 +4,7 @@ import SearchForm from "../SearchForm/SearchForm.jsx";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.jsx";
 import { mainApi } from "../../utils/MainApi.js"
 import { moviesApi } from "../../utils/MoviesApi";
-import { counterMoreCards } from '../../utils/constants.js';
+import { shortMovie, counterMoreCards } from '../../utils/constants.js';
 
 const Movies = () => {
   const counterCards = counterMoreCards();
@@ -26,7 +26,7 @@ const Movies = () => {
     const filter = (cards) => {
       setCardsFiltetred(cards.filter((card) => {
         const nameMovie = card.nameRU.toLowerCase().includes(search.name.toLowerCase());
-        const durationMovieShort = search.durationMovieShort ? card.duration <= 40 : true;
+        const durationMovieShort = search.durationMovieShort ? card.duration <= shortMovie : true;
         return nameMovie && durationMovieShort;
       }))
     }

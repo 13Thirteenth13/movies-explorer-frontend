@@ -14,6 +14,7 @@ export const mainApiAddress = {
   }
 };
 
+export const shortMovie = 40;
 
 export const counterMoreCards = () => {
   const counterCards = {
@@ -26,7 +27,7 @@ export const counterMoreCards = () => {
   }
   if (window.innerWidth < 685) {
     counterCards.start = 5;
-    counterCards.load = 1;
+    counterCards.load = 2;
   }
   return counterCards;
 };
