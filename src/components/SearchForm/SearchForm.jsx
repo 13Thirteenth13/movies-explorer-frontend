@@ -7,7 +7,7 @@ const SearchForm = (props) => {
 
   const [error, setError] = useState({ name: '', durationMovieShort: '' });
   const [value, setValue] = useState({ name: '', durationMovieShort: false });
-  const [isDisabledButton, setIsDisabledButton] = useState(true);
+  const [isDisabledButton, setIsDisabledButton] = useState(false);
 
   const formRef = useRef(null);
 
@@ -33,7 +33,7 @@ const SearchForm = (props) => {
     }
     setValue(updatedValue);
     setError((state) => ({ ...state, [name]: updatedErrMessage }));
-    setIsDisabledButton(!formRef.current.checkValidity())
+    setIsDisabledButton(!formRef.current.checkValidity());
   };
 
   const handleCheckbox = (e) => {
@@ -48,7 +48,12 @@ const SearchForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    filterCards(value);
+    if (value.name === '') {
+      error.name = "Нужно ввести ключевое слово";
+      setIsDisabledButton(!formRef.current.checkValidity());
+    } else {
+      filterCards(value);
+    };
   };
 
   return (

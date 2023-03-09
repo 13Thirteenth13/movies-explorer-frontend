@@ -42,7 +42,7 @@ const Login = (props) => {
             title="E-mail"
             onChange={handleChange}
             error={error.email}
-            pattern=".+@.+\..+"
+            pattern={'^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$'}
           />
           <Input
             type="password"
@@ -53,7 +53,13 @@ const Login = (props) => {
           />
         </div>
         <span className="auth__form__error">{apiError}</span>
-        <button className="auth__submit" type="submit" disabled={isValidForm ? false : true}>Войти</button>
+        <button
+          className={`auth__submit ${!isValidForm && "auth__submit_color-disabled"}`}
+          type="submit"
+          disabled={!isValidForm}
+        >
+          Войти
+        </button>
         <div className="auth__link-container">
           <p className="auth__link-text">Ещё не зарегистрированы?</p>
           <Link to="/sign-up" className="auth__link">

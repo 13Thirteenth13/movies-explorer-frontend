@@ -49,6 +49,7 @@ const Register = (props) => {
             title="E-mail"
             onChange={handleChange}
             error={error.email}
+            pattern={'^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$'}
           />
           <Input
             type="password"
@@ -59,7 +60,13 @@ const Register = (props) => {
           />
         </div>
         <span className="auth__form__error">{apiError}</span>
-        <button className="auth__submit" type="submit" disabled={isValidForm ? false : true}>Зарегистрироваться</button>
+        <button
+          className={`auth__submit ${!isValidForm && "auth__submit_color-disabled"}`}
+          type="submit"
+          disabled={!isValidForm}
+        >
+          Зарегистрироваться
+        </button>
       </form>
       <div className="auth__link-container">
         <p className="auth__link-text">Уже зарегестрированны?</p>

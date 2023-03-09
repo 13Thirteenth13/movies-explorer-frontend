@@ -66,6 +66,10 @@
   line-height: calc(17 / 14);
 }
 
+.auth__submit_color-disabled {
+  background-color: #E8E8E8;
+}
+
 .auth__submit:hover {
   opacity: 0.8;
   transition: opacity 0.6s;
